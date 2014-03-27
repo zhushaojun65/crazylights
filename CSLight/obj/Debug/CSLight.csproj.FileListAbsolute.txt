@@ -1,5 +1,0 @@
-D:\CLReachSafe\CSLightStudio\CLScript\bin\Debug\CLScript.dll
-D:\CLReachSafe\CSLightStudio\CLScript\bin\Debug\CLScript.pdb
-D:\CLReachSafe\CSLightStudio\CLScript\obj\Debug\CSLight.csprojResolveAssemblyReference.cache
-D:\CLReachSafe\CSLightStudio\CLScript\obj\Debug\CLScript.dll
-D:\CLReachSafe\CSLightStudio\CLScript\obj\Debug\CLScript.pdb

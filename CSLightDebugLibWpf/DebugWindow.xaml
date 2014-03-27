@@ -1,0 +1,33 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:AvalonDock="clr-namespace:AvalonDock;assembly=AvalonDock"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit" 
+        xmlns:local="clr-namespace:CSLightDebugLibWpf" 
+        mc:Ignorable="d" x:Class="CSLightDebugLibWpf.DebugWindow"
+        Title="DebugWindow" Height="578" Width="1604">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <AvalonDock:DockingManager Margin="0" Grid.Row="1">
+            <AvalonDock:ResizingPanel Orientation="Vertical">
+                <AvalonDock:DocumentPane >
+                    <local:Code_01 Title="code-01"></local:Code_01>
+                    <local:Code_01 Title="code-02"></local:Code_01>
+                </AvalonDock:DocumentPane>
+                <AvalonDock:DockablePane>
+                    <local:Func_01 />
+                    <local:Func_01 />
+                    <local:Func_01 />
+                </AvalonDock:DockablePane>
+            </AvalonDock:ResizingPanel>
+        </AvalonDock:DockingManager>
+        <ToolBar Margin="0"/>
+
+    </Grid>
+</Window>

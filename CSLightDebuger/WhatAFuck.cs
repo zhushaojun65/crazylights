@@ -6,11 +6,11 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace WinformLockTest
+namespace CSLightDebuger
 {
-    public partial class Form2 : Form
+    public partial class WhatAFuck : Form
     {
-        public Form2()
+        public WhatAFuck()
         {
             InitializeComponent();
         }

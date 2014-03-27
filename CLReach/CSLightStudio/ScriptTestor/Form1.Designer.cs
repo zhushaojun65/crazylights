@@ -30,37 +30,30 @@
         {
             this.components = new System.ComponentModel.Container();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
-            this.richTextBox3 = new System.Windows.Forms.RichTextBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.code01 = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.fastColoredTextBox1 = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.fastColoredTextBox2 = new FastColoredTextBoxNS.FastColoredTextBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.code01)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBox2)).BeginInit();
             this.SuspendLayout();
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(416, 143);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "///want(int value,int value2)\n///这是循环脚本\nint c =value;\nc+=value2;\nc/=2;\nreturn c;\n" +
-    "";
             // 
             // splitContainer1
             // 
@@ -82,6 +75,7 @@
             // 
             // splitContainer2
             // 
+            this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
             this.splitContainer2.Name = "splitContainer2";
@@ -93,47 +87,10 @@
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.richTextBox3);
+            this.splitContainer2.Panel2.Controls.Add(this.code01);
             this.splitContainer2.Size = new System.Drawing.Size(416, 189);
-            this.splitContainer2.SplitterDistance = 44;
+            this.splitContainer2.SplitterDistance = 43;
             this.splitContainer2.TabIndex = 0;
-            // 
-            // splitContainer3
-            // 
-            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer3.Name = "splitContainer3";
-            this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer3.Panel1
-            // 
-            this.splitContainer3.Panel1.Controls.Add(this.richTextBox2);
-            // 
-            // splitContainer3.Panel2
-            // 
-            this.splitContainer3.Panel2.Controls.Add(this.richTextBox1);
-            this.splitContainer3.Size = new System.Drawing.Size(416, 284);
-            this.splitContainer3.SplitterDistance = 137;
-            this.splitContainer3.TabIndex = 0;
-            // 
-            // richTextBox2
-            // 
-            this.richTextBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox2.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(416, 137);
-            this.richTextBox2.TabIndex = 1;
-            this.richTextBox2.Text = "///need int defvalue\n//   ///need Type name 语法用来标记这个脚本需要什么输入参数\n///这是初始化脚本\nreturn " +
-    "defvalue*100;\n";
-            // 
-            // richTextBox3
-            // 
-            this.richTextBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox3.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox3.Name = "richTextBox3";
-            this.richTextBox3.Size = new System.Drawing.Size(416, 141);
-            this.richTextBox3.TabIndex = 1;
-            this.richTextBox3.Text = "//这是一次性脚本\nvar i=1;\nfor(int a=0;a<10;a++)\n{\n    i++;\n}\nreturn i;\n";
             // 
             // flowLayoutPanel1
             // 
@@ -143,7 +100,7 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(416, 44);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(412, 39);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // button1
@@ -173,6 +130,105 @@
             this.button3.Text = "启动调试器";
             this.button3.UseVisualStyleBackColor = true;
             // 
+            // splitContainer3
+            // 
+            this.splitContainer3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer3.Name = "splitContainer3";
+            this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.fastColoredTextBox1);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.fastColoredTextBox2);
+            this.splitContainer3.Size = new System.Drawing.Size(416, 284);
+            this.splitContainer3.SplitterDistance = 137;
+            this.splitContainer3.TabIndex = 0;
+            // 
+            // code01
+            // 
+            this.code01.AutoScrollMinSize = new System.Drawing.Size(195, 112);
+            this.code01.BackBrush = null;
+            this.code01.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;
+            this.code01.CharHeight = 14;
+            this.code01.CharWidth = 8;
+            this.code01.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.code01.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.code01.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.code01.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.code01.IsReplaceMode = false;
+            this.code01.Language = FastColoredTextBoxNS.Language.CSharp;
+            this.code01.LeftBracket = '(';
+            this.code01.LeftBracket2 = '{';
+            this.code01.Location = new System.Drawing.Point(0, 0);
+            this.code01.Name = "code01";
+            this.code01.Paddings = new System.Windows.Forms.Padding(0);
+            this.code01.RightBracket = ')';
+            this.code01.RightBracket2 = '}';
+            this.code01.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.code01.Size = new System.Drawing.Size(412, 138);
+            this.code01.TabIndex = 2;
+            this.code01.Text = "//这是一次性脚本\r\nvar i=1;\r\nfor(int a=0;a<10;a++)\r\n{\r\n    i++;\r\n}\r\nreturn i;\r\n";
+            this.code01.Zoom = 100;
+            // 
+            // fastColoredTextBox1
+            // 
+            this.fastColoredTextBox1.AutoScrollMinSize = new System.Drawing.Size(355, 70);
+            this.fastColoredTextBox1.BackBrush = null;
+            this.fastColoredTextBox1.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;
+            this.fastColoredTextBox1.CharHeight = 14;
+            this.fastColoredTextBox1.CharWidth = 8;
+            this.fastColoredTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.fastColoredTextBox1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.fastColoredTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fastColoredTextBox1.ImeMode = System.Windows.Forms.ImeMode.AlphaFull;
+            this.fastColoredTextBox1.IsReplaceMode = false;
+            this.fastColoredTextBox1.Language = FastColoredTextBoxNS.Language.CSharp;
+            this.fastColoredTextBox1.LeftBracket = '(';
+            this.fastColoredTextBox1.LeftBracket2 = '{';
+            this.fastColoredTextBox1.Location = new System.Drawing.Point(0, 0);
+            this.fastColoredTextBox1.Name = "fastColoredTextBox1";
+            this.fastColoredTextBox1.Paddings = new System.Windows.Forms.Padding(0);
+            this.fastColoredTextBox1.RightBracket = ')';
+            this.fastColoredTextBox1.RightBracket2 = '}';
+            this.fastColoredTextBox1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.fastColoredTextBox1.Size = new System.Drawing.Size(412, 133);
+            this.fastColoredTextBox1.TabIndex = 0;
+            this.fastColoredTextBox1.Text = "///want(int defvalue)\r\n//   ///want(Type name)语法用来标记这个脚本需要什么输入参数\r\n///这是初始化脚本\r\nret" +
+    "urn defvalue*100;\r\n";
+            this.fastColoredTextBox1.Zoom = 100;
+            // 
+            // fastColoredTextBox2
+            // 
+            this.fastColoredTextBox2.AutoScrollMinSize = new System.Drawing.Size(259, 98);
+            this.fastColoredTextBox2.BackBrush = null;
+            this.fastColoredTextBox2.BracketsHighlightStrategy = FastColoredTextBoxNS.BracketsHighlightStrategy.Strategy2;
+            this.fastColoredTextBox2.CharHeight = 14;
+            this.fastColoredTextBox2.CharWidth = 8;
+            this.fastColoredTextBox2.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.fastColoredTextBox2.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.fastColoredTextBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fastColoredTextBox2.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.fastColoredTextBox2.IsReplaceMode = false;
+            this.fastColoredTextBox2.Language = FastColoredTextBoxNS.Language.CSharp;
+            this.fastColoredTextBox2.LeftBracket = '(';
+            this.fastColoredTextBox2.LeftBracket2 = '{';
+            this.fastColoredTextBox2.Location = new System.Drawing.Point(0, 0);
+            this.fastColoredTextBox2.Name = "fastColoredTextBox2";
+            this.fastColoredTextBox2.Paddings = new System.Windows.Forms.Padding(0);
+            this.fastColoredTextBox2.RightBracket = ')';
+            this.fastColoredTextBox2.RightBracket2 = '}';
+            this.fastColoredTextBox2.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.fastColoredTextBox2.Size = new System.Drawing.Size(412, 139);
+            this.fastColoredTextBox2.TabIndex = 0;
+            this.fastColoredTextBox2.Text = "///want(int value,int value2)\r\n///这是循环脚本\r\nint c =value;\r\nc+=value2;\r\nc/=2;\r\nretur" +
+    "n c;\r\n";
+            this.fastColoredTextBox2.Zoom = 100;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -187,10 +243,13 @@
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
+            this.flowLayoutPanel1.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
             this.splitContainer3.ResumeLayout(false);
-            this.flowLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.code01)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -198,16 +257,16 @@
         #endregion
 
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.RichTextBox richTextBox3;
         private System.Windows.Forms.SplitContainer splitContainer3;
-        private System.Windows.Forms.RichTextBox richTextBox2;
+        private FastColoredTextBoxNS.FastColoredTextBox code01;
+        private FastColoredTextBoxNS.FastColoredTextBox fastColoredTextBox1;
+        private FastColoredTextBoxNS.FastColoredTextBox fastColoredTextBox2;
     }
 }
 

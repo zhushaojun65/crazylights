@@ -1,0 +1,5 @@
+D:\CLReachSafe\CSLite\CLScript\obj\Debug\PortableCLScript.csprojResolveAssemblyReference.cache
+D:\CLReachSafe\CSLite\CLScript\bin\Debug\PortableCLScript.dll
+D:\CLReachSafe\CSLite\CLScript\bin\Debug\PortableCLScript.pdb
+D:\CLReachSafe\CSLite\CLScript\obj\Debug\PortableCLScript.dll
+D:\CLReachSafe\CSLite\CLScript\obj\Debug\PortableCLScript.pdb

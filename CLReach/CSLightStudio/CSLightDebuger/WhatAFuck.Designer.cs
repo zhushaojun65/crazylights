@@ -1,4 +1,4 @@
-﻿namespace CSLightDebuger
+﻿namespace CSLightDebug
 {
     partial class WhatAFuck
     {
@@ -37,6 +37,7 @@
             this.ClientSize = new System.Drawing.Size(470, 349);
             this.Name = "WhatAFuck";
             this.Text = "WhatAFuck";
+            this.Load += new System.EventHandler(this.WhatAFuck_Load);
             this.ResumeLayout(false);
 
         }

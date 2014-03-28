@@ -28,8 +28,10 @@ namespace ScriptTestor
         private void button4_Click(object sender, EventArgs e)
         {
             useDebug = true;
+            //CSLightDebug.Debugger.OpenDebugWin(onClose); 
+            
             Init();
-            CSLightDebug.Debug.OpenDebugWin(onClose);
+            
         }
         bool bInit = false;
         public void Init()
@@ -45,7 +47,7 @@ namespace ScriptTestor
                 CSLight.ICLS_Debugger debugger = new CSLightDebug.Debugger();
                 debugger.InitCodeCollection(codeInFolder);
                 logger = debugger;
-                CSLightDebug.Debug.OpenDebugWin(null);
+                CSLightDebug.Debugger.OpenDebugWin(null);
             }
             else
             {

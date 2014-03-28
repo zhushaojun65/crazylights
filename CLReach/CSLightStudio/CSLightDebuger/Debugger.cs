@@ -6,25 +6,44 @@ namespace CSLightDebug
 {
     public class Debugger:CSLight.ICLS_Debugger
     {
+        public delegate void Action();
+        static WhatAFuck WindowShow =null;
+        public static void OpenDebugWin(Action onClose)
+        {
+            if (WindowShow != null) return;
+
+            System.Threading.Thread t = new System.Threading.Thread(() =>
+            {
+                WindowShow = new WhatAFuck();
+                System.Windows.Forms.Application.Run(WindowShow);
+                WindowShow = null;
+                onClose();
+            });
+            t.SetApartmentState(System.Threading.ApartmentState.STA);
+            t.Start();
+        }
+
+
         CSLight.ICLS_CodeCollection codes;
         public void InitCodeCollection(CSLight.ICLS_CodeCollection coll)
         {
             codes =coll;
         }
-
+        
         public void Log(string str)
         {
-            throw new NotImplementedException();
+            if(WindowShow!=null)
+            WindowShow.SafeLog(str);
         }
 
         public void Log_Warn(string str)
         {
-            throw new NotImplementedException();
+            WindowShow.SafeLog_Warn(str);
         }
 
         public void Log_Error(string str)
         {
-            throw new NotImplementedException();
+            WindowShow.SafeLog_Error(str);
         }
 
 

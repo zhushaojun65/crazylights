@@ -7,7 +7,7 @@
     <ProjectGuid>{805B9777-37F3-4C8D-833C-C30C94F82571}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CSLightDebuger</RootNamespace>
+    <RootNamespace>CSLightDebug</RootNamespace>
     <AssemblyName>CSLightDebuger</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Debug.cs" />
+    <Compile Include="Debugger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WhatAFuck.cs">
       <SubType>Form</SubType>
@@ -56,6 +57,12 @@
     <EmbeddedResource Include="WhatAFuck.resx">
       <DependentUpon>WhatAFuck.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CSLight\CSLight.csproj">
+      <Project>{ce211682-b7e0-450a-821c-72e1da78390e}</Project>
+      <Name>CSLight</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

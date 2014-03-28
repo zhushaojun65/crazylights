@@ -8,13 +8,15 @@ using System.Text;
 
 namespace CSLight
 {
-
+    //环境 增加本地代码的管理
+    //环境 增加运行中的表达式查询
     public class CLS_Environment
     {
 
         public CLS_Environment(ICLS_Logger logger)
         {
             this.logger = logger;
+            this.debugger = this.logger as ICLS_Debugger;
             tokenParser = new CLS_TokenParser();
             compiler = new CLS_Expression_Compiler(logger);
             RegType(new CLS_Type_Int());
@@ -67,7 +69,7 @@ namespace CSLight
             get;
             private set;
         }
-
+        public ICLS_Debugger debugger;
         ICLS_TokenParser tokenParser = null;
         ICLS_Expression_Compiler compiler = null;
         public IList<Token> ParserToken(string code)

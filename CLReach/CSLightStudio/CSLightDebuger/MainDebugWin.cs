@@ -21,10 +21,17 @@ namespace CSLightDebug
         Watch watch = new Watch();
         private void WhatAFuck_Load(object sender, EventArgs e)
         {
-            for (int i = 0; i < 3; i++)
+            try
             {
-                Code code = new Code();
-                code.Show(this.dockPanel1, WeifenLuo.WinFormsUI.Docking.DockState.Document);
+                for (int i = 0; i < 3; i++)
+                {
+                    Code code = new Code();
+                    code.Show(this.dockPanel1, WeifenLuo.WinFormsUI.Docking.DockState.Document);
+                }
+            }
+            catch
+            {
+
             }
             console.Show(this.dockPanel1,WeifenLuo.WinFormsUI.Docking.DockState.DockBottom);
             solution.Show(this.dockPanel1, WeifenLuo.WinFormsUI.Docking.DockState.DockRight);
@@ -37,6 +44,7 @@ namespace CSLightDebug
             Action ac = () =>
             {
                 this.Show();
+                this.BringToFront();
             };
             this.Invoke(ac);
         }
@@ -124,6 +132,7 @@ namespace CSLightDebug
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Show();
+            this.BringToFront();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -132,6 +141,27 @@ namespace CSLightDebug
             {
                 RealExit();
             }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 强制退出ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 仅当宿主程序关不掉才用这个ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RealExit();
+        }
+
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            Show();
+            this.BringToFront();
         }
     }
 }

@@ -6,66 +6,99 @@ namespace CSLightDebug
 {
     public class Debugger:CSLight.ICLS_Debugger
     {
-        public delegate void Action();
-        static WhatAFuck WindowShow =null;
-        public static void OpenDebugWin(Action onClose)
-        {
-            if (WindowShow != null) return;
-
-            System.Threading.Thread t = new System.Threading.Thread(() =>
-            {
-                WindowShow = new WhatAFuck();
-                System.Windows.Forms.Application.Run(WindowShow);
-                WindowShow = null;
-                onClose();
-            });
-            t.SetApartmentState(System.Threading.ApartmentState.STA);
-            t.Start();
-        }
 
 
-        CSLight.ICLS_CodeCollection codes;
-        public void InitCodeCollection(CSLight.ICLS_CodeCollection coll)
-        {
-            codes =coll;
-        }
-        
+
+
+        CSLight.ICLS_Logger loggerWithoutDebug;
         public void Log(string str)
         {
-            if(WindowShow!=null)
-            WindowShow.SafeLog(str);
+            if (getLockedDebugTag())
+            {
+                WindowShow.SafeLog(str);
+            }
+            else
+            {
+                loggerWithoutDebug.Log(str);
+            }
         }
 
         public void Log_Warn(string str)
         {
-            WindowShow.SafeLog_Warn(str);
+            if (getLockedDebugTag())
+            {
+                WindowShow.SafeLog_Warn(str);
+            }
+            else
+            {
+                loggerWithoutDebug.Log_Warn(str);
+            }
         }
 
         public void Log_Error(string str)
         {
-            WindowShow.SafeLog_Error(str);
+            if (getLockedDebugTag())
+            {
+                WindowShow.SafeLog_Error(str);
+            }
+            else
+            {
+                loggerWithoutDebug.Log_Error(str);
+            }
         }
-
-
-
-        public void DebugRun()
+        static bool DebugTag = false;
+        public class _debugtag
         {
-            throw new NotImplementedException();
+            int tag = 0;
         }
-
-        public void DebugPause()
+        static _debugtag _debugtaglock = new _debugtag();
+        public static bool getLockedDebugTag()
         {
-            throw new NotImplementedException();
-        }
+           lock(_debugtaglock)
+           {
+               return DebugTag;
+           }
 
-        public void DebugStop()
+        }
+        public static void beginSetLockedDebugTag(bool tag)
         {
-            throw new NotImplementedException();
-        }
+            System.Threading.Monitor.Enter(_debugtaglock);
+            DebugTag = tag;
 
+        }
+        public static void endSetLockedDebugTag()
+        {
+            System.Threading.Monitor.Exit(_debugtaglock);
+        }
+        CSLight.ICLS_CodeCollection codes;
+        WhatAFuck WindowShow;
+        public void BeginDebugThread(CSLight.ICLS_Logger loggerWithoutDebug, CSLight.func onDebugWinClose, CSLight.ICLS_CodeCollection coll)
+        {
+            this.loggerWithoutDebug = loggerWithoutDebug;
+            this.codes = coll;
+            if (getLockedDebugTag()) return;
+
+
+
+            System.Threading.Thread t = new System.Threading.Thread(() =>
+            {
+                beginSetLockedDebugTag(true);
+                WindowShow = new WhatAFuck();
+                System.Windows.Forms.Application.Run(WindowShow);
+                WindowShow = null;
+                if (onDebugWinClose != null)
+                    onDebugWinClose(); 
+                
+                endSetLockedDebugTag();
+            });
+            t.SetApartmentState(System.Threading.ApartmentState.STA);
+            t.Start();
+        }
         public void JumpToCode(string file, string code = null, int line = 0, int col = 0)
         {
-            throw new NotImplementedException();
+
         }
+
+
     }
 }

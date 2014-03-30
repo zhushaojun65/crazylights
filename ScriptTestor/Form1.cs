@@ -45,9 +45,8 @@ namespace ScriptTestor
             if (useDebug)
             {
                 CSLight.ICLS_Debugger debugger = new CSLightDebug.Debugger();
-                debugger.InitCodeCollection(codeInFolder);
+                debugger.BeginDebugThread(this,null,codeInFolder);
                 logger = debugger;
-                CSLightDebug.Debugger.OpenDebugWin(null);
             }
             else
             {

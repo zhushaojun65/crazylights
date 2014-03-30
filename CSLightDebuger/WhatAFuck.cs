@@ -18,12 +18,14 @@ namespace CSLightDebug
         private void WhatAFuck_Load(object sender, EventArgs e)
         {
             console.Show(this.dockPanel1);
+            CSLightDebug.Debugger.endSetLockedDebugTag();
         }
 
         private void WhatAFuck_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            Application.ExitThread();
+            //e.Cancel = true;
+            //Application.ExitThread();
+            CSLightDebug.Debugger.beginSetLockedDebugTag(false);
         }
          delegate void Action(string str); 
         public void SafeLog(string str)

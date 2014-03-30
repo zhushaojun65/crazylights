@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms;
 
 namespace CSLightDebug
 {
@@ -87,8 +88,13 @@ namespace CSLightDebug
             System.Threading.Thread t = new System.Threading.Thread(() =>
             {
                 beginSetLockedDebugTag(true);
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.EnableVisualStyles();
+
+       
                 WindowShow = new MainDebugWin();
                 System.Windows.Forms.Application.Run(WindowShow);
+              
                 WindowShow = null;
                 endSetLockedDebugTag();
             });

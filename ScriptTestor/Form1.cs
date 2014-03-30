@@ -17,7 +17,17 @@ namespace ScriptTestor
 
         void onClose()
         {
+            try
+            {
+                Action safeclost = () =>
+                    {
+                        button3.Enabled = true;
+                    };
+                this.Invoke(safeclost);
+            }catch
+            {
 
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -34,6 +44,7 @@ namespace ScriptTestor
             
         }
         bool bInit = false;
+        CSLight.ICLS_Debugger debugger;
         public void Init()
         {
             bInit = true;
@@ -44,8 +55,8 @@ namespace ScriptTestor
             CSLight.ICLS_Logger logger = null;
             if (useDebug)
             {
-                CSLight.ICLS_Debugger debugger = new CSLightDebug.Debugger();
-                debugger.BeginDebugThread(this,null,codeInFolder);
+                debugger = new CSLightDebug.Debugger();
+                debugger.BeginDebugThread(this,(CSLight.func)onClose,codeInFolder);
                 logger = debugger;
             }
             else
@@ -59,6 +70,7 @@ namespace ScriptTestor
             scriptEnv.ExecuteCode(this.codeInFolder.getCode("code\\init.cls.txt"));
 
         }
+
         CSLight.CLS_Environment scriptEnv;
         bool useDebug = false;
         private void Form1_Load(object sender, EventArgs e)
@@ -145,6 +157,12 @@ namespace ScriptTestor
         private void button2_Click(object sender, EventArgs e)
         {
             scriptEnv.ExecuteCode(this.codeInFolder.getCode("code\\once.cls.txt"));
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            debugger.BeginDebugThread(this, (CSLight.func)onClose, codeInFolder);
+            button3.Enabled = false;
         }
 
     }

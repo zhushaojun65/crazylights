@@ -5,6 +5,10 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WSLight", "WSLight\WSLight.csproj", "{FD01F047-47CD-4F60-B71C-F0FDF6987D78}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WSLight_Server45", "WSLight_Server45\WSLight_Server45.csproj", "{3696394F-9B3F-4C43-AE0E-EA1CFE7467A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WSLight_Client45", "WSLight_Client45\WSLight_Client45.csproj", "{653CB196-6329-4261-A930-C35E043F57F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{FD01F047-47CD-4F60-B71C-F0FDF6987D78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD01F047-47CD-4F60-B71C-F0FDF6987D78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD01F047-47CD-4F60-B71C-F0FDF6987D78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3696394F-9B3F-4C43-AE0E-EA1CFE7467A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3696394F-9B3F-4C43-AE0E-EA1CFE7467A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3696394F-9B3F-4C43-AE0E-EA1CFE7467A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3696394F-9B3F-4C43-AE0E-EA1CFE7467A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{653CB196-6329-4261-A930-C35E043F57F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{653CB196-6329-4261-A930-C35E043F57F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{653CB196-6329-4261-A930-C35E043F57F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{653CB196-6329-4261-A930-C35E043F57F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

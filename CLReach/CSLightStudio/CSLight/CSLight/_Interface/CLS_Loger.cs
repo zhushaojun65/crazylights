@@ -28,19 +28,11 @@ namespace CSLight
 
         bool newCode(string name);
     }
+    public delegate void func();
     public interface ICLS_Debugger:ICLS_Logger
     {
-        /// <summary>
-        /// 设置代码集合
-        /// </summary>
-        /// <param name="?"></param>
-        void InitCodeCollection(ICLS_CodeCollection coll);
 
-
-        void DebugRun();
-        void DebugPause();
-        void DebugStop();
-     
+        void BeginDebugThread(ICLS_Logger loggerWithoutDebug,func onDebugWinClose, ICLS_CodeCollection coll);
         /// <summary>
         /// 跳转到代码位置
         /// </summary>

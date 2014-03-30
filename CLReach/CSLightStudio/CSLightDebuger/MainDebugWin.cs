@@ -40,11 +40,39 @@ namespace CSLightDebug
             };
             this.Invoke(ac);
         }
+        public void SafeHide()
+        {
+            Action ac = () =>
+            {
+                this.Hide();
+            };
+            this.Invoke(ac);
+        }
+        public void SafeDispose()
+        {
+            Action ac = () =>
+            {
+                this.RealExit();
+            };
+            this.Invoke(ac);
+        }
         private void WhatAFuck_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            this.Hide();
+            if (bExit == false)
+            {
+                e.Cancel = true;
+                this.Hide();
+            }
 
+        }
+        bool bExit = false;
+        void RealExit()
+        {
+            bExit = true;
+            this.notifyIcon1.Visible = false;
+
+            CSLightDebug.Debugger.beginSetLockedDebugTag(false);
+            this.Close();
         }
          delegate void Action(); 
         public void SafeLog(string str)
@@ -80,30 +108,14 @@ namespace CSLightDebug
             this.console.Show(dockPanel1);
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.notifyIcon1.Visible = false;
-            //
-            CSLightDebug.Debugger.beginSetLockedDebugTag(false);
-            Application.ExitThread();
-        }
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
 
         }
 
-        /// <summary>
-        /// 通知栏菜单exit
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            this.notifyIcon1.Visible = false;
-            CSLightDebug.Debugger.beginSetLockedDebugTag(false);
-            Application.ExitThread();
-        }
+
+
         /// <summary>
         ///  通知栏菜单show
         /// </summary>
@@ -112,6 +124,14 @@ namespace CSLightDebug
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Show();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if(Debugger.moniterForAutoQuit.IsAlive==false)
+            {
+                RealExit();
+            }
         }
     }
 }

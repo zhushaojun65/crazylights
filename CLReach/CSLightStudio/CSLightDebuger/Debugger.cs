@@ -70,18 +70,19 @@ namespace CSLightDebug
         {
             System.Threading.Monitor.Exit(_debugtaglock);
         }
-        CSLight.ICLS_CodeCollection codes;
+        Dictionary<string,WeakReference>  codes;
         MainDebugWin WindowShow;
-        public void BeginDebugThread(CSLight.ICLS_Logger loggerWithoutDebug, CSLight.func onDebugWinClose, CSLight.ICLS_CodeCollection coll)
+
+        public static WeakReference moniterForAutoQuit;
+        public void Init(CSLight.ICLS_Logger _loggerWithoutDebug, object _moniterForAutoQuit)
         {
-            this.loggerWithoutDebug = loggerWithoutDebug;
-            this.codes = coll;
+            this.loggerWithoutDebug = _loggerWithoutDebug;
+            moniterForAutoQuit = new WeakReference( _moniterForAutoQuit);
             if (getLockedDebugTag())
             {
                 WindowShow.SafeShow();
                 return;
             }
-
 
             System.Threading.Thread t = new System.Threading.Thread(() =>
             {
@@ -89,13 +90,30 @@ namespace CSLightDebug
                 WindowShow = new MainDebugWin();
                 System.Windows.Forms.Application.Run(WindowShow);
                 WindowShow = null;
-                if (onDebugWinClose != null)
-                    onDebugWinClose(); 
-                
                 endSetLockedDebugTag();
             });
             t.SetApartmentState(System.Threading.ApartmentState.STA);
             t.Start();
+        }
+        public void Show()
+        {
+            if (getLockedDebugTag())
+            {
+                WindowShow.SafeShow();
+                return;
+            }
+        }
+        public void Hide()
+        {
+            if (getLockedDebugTag())
+            {
+                WindowShow.SafeHide();
+                return;
+            }
+        }
+        public void Dispose()
+        {
+            WindowShow.SafeDispose();
         }
         public void JumpToCode(string file, string code = null, int line = 0, int col = 0)
         {
@@ -103,5 +121,11 @@ namespace CSLightDebug
         }
 
 
+
+
+        public void RegCodeCollection(string name,CSLight.ICLS_CodeCollection coll)
+        {
+           codes.Add( name,new WeakReference(coll));
+        }
     }
 }

@@ -31,8 +31,21 @@ namespace CSLight
     public delegate void func();
     public interface ICLS_Debugger:ICLS_Logger
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="loggerWithoutDebug"></param>
+        /// <param name="moniterForAutoQuit">弱引用对象，退出监视</param>
+        void Init(ICLS_Logger loggerWithoutDebug,object moniterForAutoQuit);
+        void Show();
+        void Hide();
+        void Dispose();//终止调试器
 
-        void BeginDebugThread(ICLS_Logger loggerWithoutDebug,func onDebugWinClose, ICLS_CodeCollection coll);
+        /// <summary>
+        /// 不要影响CodeCollection的回收,CodeCollection可能是由运行时新增加的
+        /// </summary>
+        /// <param name="coll">弱引用的coll</param>
+        void RegCodeCollection(string name, CSLight.ICLS_CodeCollection coll);
         /// <summary>
         /// 跳转到代码位置
         /// </summary>

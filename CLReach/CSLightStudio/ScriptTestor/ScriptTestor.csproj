@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FastColoredTextBox">
-      <HintPath>..\lib\FastColoredTextBox.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -77,10 +74,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CSLightDebuger\CSLightDebuger.csproj">
-      <Project>{805b9777-37f3-4c8d-833c-c30c94f82571}</Project>
-      <Name>CSLightDebuger</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CSLight\CSLight.csproj">
       <Project>{ce211682-b7e0-450a-821c-72e1da78390e}</Project>
       <Name>CSLight</Name>

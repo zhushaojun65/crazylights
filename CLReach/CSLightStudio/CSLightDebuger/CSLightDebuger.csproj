@@ -43,27 +43,63 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Console.cs">
+    <Compile Include="submodel\Attribute.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Console.Designer.cs">
+    <Compile Include="submodel\Attribute.Designer.cs">
+      <DependentUpon>Attribute.cs</DependentUpon>
+    </Compile>
+    <Compile Include="submodel\Code.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="submodel\Code.Designer.cs">
+      <DependentUpon>Code.cs</DependentUpon>
+    </Compile>
+    <Compile Include="submodel\Console.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="submodel\Console.Designer.cs">
       <DependentUpon>Console.cs</DependentUpon>
     </Compile>
     <Compile Include="Debugger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WhatAFuck.cs">
+    <Compile Include="MainDebugWin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WhatAFuck.Designer.cs">
-      <DependentUpon>WhatAFuck.cs</DependentUpon>
+    <Compile Include="MainDebugWin.Designer.cs">
+      <DependentUpon>MainDebugWin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="submodel\Solution.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="submodel\Solution.Designer.cs">
+      <DependentUpon>Solution.cs</DependentUpon>
+    </Compile>
+    <Compile Include="submodel\Watch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="submodel\Watch.Designer.cs">
+      <DependentUpon>Watch.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Console.resx">
+    <EmbeddedResource Include="submodel\Attribute.resx">
+      <DependentUpon>Attribute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="submodel\Code.resx">
+      <DependentUpon>Code.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="submodel\Console.resx">
       <DependentUpon>Console.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WhatAFuck.resx">
-      <DependentUpon>WhatAFuck.cs</DependentUpon>
+    <EmbeddedResource Include="MainDebugWin.resx">
+      <DependentUpon>MainDebugWin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="submodel\Solution.resx">
+      <DependentUpon>Solution.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="submodel\Watch.resx">
+      <DependentUpon>Watch.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +107,10 @@
       <Project>{ce211682-b7e0-450a-821c-72e1da78390e}</Project>
       <Name>CSLight</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon\DEVTOOL.ICO" />
+    <Content Include="icon\Drill.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

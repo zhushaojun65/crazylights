@@ -71,19 +71,22 @@ namespace CSLightDebug
             System.Threading.Monitor.Exit(_debugtaglock);
         }
         CSLight.ICLS_CodeCollection codes;
-        WhatAFuck WindowShow;
+        MainDebugWin WindowShow;
         public void BeginDebugThread(CSLight.ICLS_Logger loggerWithoutDebug, CSLight.func onDebugWinClose, CSLight.ICLS_CodeCollection coll)
         {
             this.loggerWithoutDebug = loggerWithoutDebug;
             this.codes = coll;
-            if (getLockedDebugTag()) return;
-
+            if (getLockedDebugTag())
+            {
+                WindowShow.SafeShow();
+                return;
+            }
 
 
             System.Threading.Thread t = new System.Threading.Thread(() =>
             {
                 beginSetLockedDebugTag(true);
-                WindowShow = new WhatAFuck();
+                WindowShow = new MainDebugWin();
                 System.Windows.Forms.Application.Run(WindowShow);
                 WindowShow = null;
                 if (onDebugWinClose != null)

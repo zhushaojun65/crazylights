@@ -43,8 +43,22 @@ namespace ScriptTestor
             Init();
             
         }
+        public  CSLight.ICLS_Debugger CreateFormAss(string path)
+        {
+         string p=   System.IO.Path.GetFullPath(path);
+           var ass = System.Reflection.Assembly.LoadFile(p);
+          var t = ass.GetType("CSLightDebug.Debugger");
+          return t.Assembly.CreateInstance(t.FullName) as CSLight.ICLS_Debugger;
+
+        }
         bool bInit = false;
         CSLight.ICLS_Debugger debugger;
+
+        class MoniterQuit
+        {
+
+        }
+        MoniterQuit moniterQuit = new MoniterQuit();
         public void Init()
         {
             bInit = true;
@@ -55,8 +69,8 @@ namespace ScriptTestor
             CSLight.ICLS_Logger logger = null;
             if (useDebug)
             {
-                debugger = new CSLightDebug.Debugger();
-                debugger.BeginDebugThread(this,(CSLight.func)onClose,codeInFolder);
+                debugger = CreateFormAss("../libgen/CSLightDebuger.dll");
+                debugger.Init(this, moniterQuit);
                 logger = debugger;
             }
             else
@@ -161,8 +175,14 @@ namespace ScriptTestor
 
         private void button3_Click(object sender, EventArgs e)
         {
-            debugger.BeginDebugThread(this, (CSLight.func)onClose, codeInFolder);
-            button3.Enabled = false;
+            debugger.Show();
+           
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            moniterQuit = null;
+            GC.Collect();
         }
 
     }

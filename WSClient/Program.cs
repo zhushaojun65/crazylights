@@ -25,7 +25,7 @@ namespace WSClient
         static void onConnect(IAsyncResult ar)
         {
             Console.WriteLine("connected.");
-            byte[] packet = WSLight.WebSocket_Protocol.GenHandshake(out safecode, target);
+            byte[] packet = WSLight.Layer0.HandShake.GenHandshake(out safecode, target);
             tcp.GetStream().BeginWrite(packet, 0, packet.Length, onHandshakeSend, null);
             Console.WriteLine("Handshake.Key=" + safecode);
         }
@@ -44,7 +44,7 @@ namespace WSClient
         static void SendHello()
         {
             var cool = Encoding.UTF8.GetBytes("hello world.");
-            byte[] bts = WSLight.DataFrame.MakeSendData(cool, 0, cool.Length);
+            byte[] bts = WSLight.Layer0.DataFrame.MakeSendData(cool, 0, cool.Length);
             tcp.GetStream().BeginWrite(bts, 0, bts.Length, OnSendNormal, null);
         }
         static void onRead(IAsyncResult ar)
@@ -53,7 +53,7 @@ namespace WSClient
             if (!bHanded)
             {
                 string resp = Encoding.UTF8.GetString(buf, 0, readlen);
-                bool b = WSLight.WebSocket_Protocol.CheckHandshake(resp,safecode);
+                bool b = WSLight.Layer0.HandShake.CheckHandshake(resp,safecode);
                 if(b)
                 {
                     bHanded = true;
@@ -68,14 +68,15 @@ namespace WSClient
             else
             {
                 int len;
-                WSLight.DataFrame frame;
-                WSLight.WebSocket_Protocol.GetDateFrame(buf, 0, readlen, out frame, out len);
+                WSLight.Layer0.DataFrame frame;
+                WSLight.Layer0.HandShake.GetDateFrame(buf, 0, readlen, out frame, out len);
                 if(frame!=null)
                 {
-                    if(frame.datalen+len <= readlen&& frame.datalen>0)
+                    if(frame.datalenlong+len <= readlen&& frame.datalenlong>0 &&frame.OpCode== WSLight.Layer0.DataFrame.OpCodeType.Text)
                     {
-                        frame.ReadString(buf, len);
-                        Console.WriteLine("read frame:code=" + frame.OpCode + " str=" + frame.text);
+                        string str = Encoding.UTF8.GetString(buf, len, frame.datalen);
+                        //frame.ReadString(buf, len);
+                        Console.WriteLine("read frame:code=" + frame.OpCode + " str=" + str);
                     }
                     else
                     {

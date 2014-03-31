@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FD01F047-47CD-4F60-B71C-F0FDF6987D78}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{2755CCD0-22C7-4E47-85B3-A5EE87348442}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WSLight</RootNamespace>
-    <AssemblyName>WSLight</AssemblyName>
+    <RootNamespace>WSClient</RootNamespace>
+    <AssemblyName>WSClient</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,18 +33,26 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebSocket_Protocol.cs" />
+    <Compile Include="Protocol\FramePartReader\DataFramePartReader.cs" />
+    <Compile Include="Protocol\FramePartReader\ExtendedLenghtReader.cs" />
+    <Compile Include="Protocol\FramePartReader\FixPartReader.cs" />
+    <Compile Include="Protocol\FramePartReader\IDataFramePartReader.cs" />
+    <Compile Include="Protocol\FramePartReader\MaskKeyReader.cs" />
+    <Compile Include="Protocol\FramePartReader\PayloadDataReader.cs" />
+    <Compile Include="Protocol\WebSocketDataFrame.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\WSLight\WSLight.csproj">
+      <Project>{fd01f047-47cd-4f60-b71c-f0fdf6987d78}</Project>
+      <Name>WSLight</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

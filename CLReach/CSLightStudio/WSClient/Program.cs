@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
-using WebSocket4Net.Protocol.FramePartReader;
 
 namespace WSClient
 {
@@ -13,11 +12,12 @@ namespace WSClient
         {
             target = new Uri("ws://127.0.0.1:808/");
             tcp.BeginConnect(target.Host, target.Port, onConnect, null);
-
+            Console.WriteLine("Init");
             while (true)
             {
-                Console.WriteLine("Init");
+
                 Console.ReadLine();
+                SendHello();
             }
         }
         static Uri target;
@@ -36,6 +36,17 @@ namespace WSClient
             tcp.GetStream().BeginRead(buf, 0, 1024, onRead, null);
         }
         static bool bHanded = false;
+
+        static void OnSendNormal(IAsyncResult ar)
+        {
+            tcp.GetStream().EndWrite(ar);
+        }
+        static void SendHello()
+        {
+            var cool = Encoding.UTF8.GetBytes("hello world.");
+            byte[] bts = WSLight.DataFrame.MakeSendData(cool, 0, cool.Length);
+            tcp.GetStream().BeginWrite(bts, 0, bts.Length, OnSendNormal, null);
+        }
         static void onRead(IAsyncResult ar)
         {
             int readlen = tcp.GetStream().EndRead(ar);
@@ -47,29 +58,8 @@ namespace WSClient
                 {
                     bHanded = true;
                     Console.WriteLine("HandShake succ.");
+                    SendHello();
                 }
-                //if (!resp.StartsWith(WSLight.WebSocket_Protocol.m_BadRequestPrefix, StringComparison.OrdinalIgnoreCase))
-                //{
-                //    bHanded = true;
-                //    Console.WriteLine("HandShake succ.");
-                //    foreach (var l in resp.Split(new string[] { "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries))
-                //    {
-                //        var pair = l.Split(new string[] { ":", " " }, StringSplitOptions.RemoveEmptyEntries);
-                //        if (pair.Length == 2)
-                //        {
-                //            Console.WriteLine(pair[0] + "||" + pair[1]);
-                //            if (pair[0] == "Sec-WebSocket-Accept")
-                //            {
-
-                //                Console.WriteLine("Key=" + pair[1] + "(" + (pair[1] == safecode) + ")");
-                //                if (pair[1] != safecode)
-                //                {
-                //                    //验证不匹配
-                //                }
-                //            }
-                //        }
-                //    }
-                //}
                 else
                 {
                     Console.WriteLine("HandShake fail." + resp);
@@ -77,8 +67,21 @@ namespace WSClient
             }
             else
             {
-                //后面就是二进制数据帧
-                Console.WriteLine("read:" + readlen);
+                int len;
+                WSLight.DataFrame frame;
+                WSLight.WebSocket_Protocol.GetDateFrame(buf, 0, readlen, out frame, out len);
+                if(frame!=null)
+                {
+                    if(frame.datalen+len <= readlen&& frame.datalen>0)
+                    {
+                        frame.ReadString(buf, len);
+                        Console.WriteLine("read frame:code=" + frame.OpCode + " str=" + frame.text);
+                    }
+                    else
+                    {
+                        Console.WriteLine("read frame:code=" + frame.OpCode + " len=" + frame.datalen);
+                    }
+                }
             }
             tcp.GetStream().BeginRead(buf, 0, 1024, onRead, null);
 

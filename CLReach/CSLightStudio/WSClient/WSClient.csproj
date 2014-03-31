@@ -39,13 +39,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Protocol\FramePartReader\DataFramePartReader.cs" />
-    <Compile Include="Protocol\FramePartReader\ExtendedLenghtReader.cs" />
-    <Compile Include="Protocol\FramePartReader\FixPartReader.cs" />
-    <Compile Include="Protocol\FramePartReader\IDataFramePartReader.cs" />
-    <Compile Include="Protocol\FramePartReader\MaskKeyReader.cs" />
-    <Compile Include="Protocol\FramePartReader\PayloadDataReader.cs" />
-    <Compile Include="Protocol\WebSocketDataFrame.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WSLight\WSLight.csproj">

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WSLight_Server45", "WSLight
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WSLight_Client45", "WSLight_Client45\WSLight_Client45.csproj", "{653CB196-6329-4261-A930-C35E043F57F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WSClient", "WSClient\WSClient.csproj", "{2755CCD0-22C7-4E47-85B3-A5EE87348442}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{653CB196-6329-4261-A930-C35E043F57F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{653CB196-6329-4261-A930-C35E043F57F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{653CB196-6329-4261-A930-C35E043F57F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2755CCD0-22C7-4E47-85B3-A5EE87348442}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2755CCD0-22C7-4E47-85B3-A5EE87348442}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2755CCD0-22C7-4E47-85B3-A5EE87348442}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2755CCD0-22C7-4E47-85B3-A5EE87348442}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -76,7 +76,7 @@ namespace WSLight_Server45
             try
             {
                 var wsc = await content.AcceptWebSocketAsync(null);
-
+                Safe_Log("connected 1");
                 WebSocket socket = wsc.WebSocket;
                 try
                 {

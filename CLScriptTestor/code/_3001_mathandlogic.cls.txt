@@ -1,0 +1,4 @@
+﻿int i=4;
+int c=5;
+bool b = (i<3||c<=5)&&1<2;
+return b;

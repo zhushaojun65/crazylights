@@ -66,6 +66,7 @@
     <Compile Include="CSLight\Expression\Function\CLS_Expression_StaticSetValue.cs" />
     <Compile Include="CSLight\Expression\Loop\CLS_Expression_LoopBreak.cs" />
     <Compile Include="CSLight\Expression\Loop\CLS_Expression_LoopContinue.cs" />
+    <Compile Include="CSLight\Expression\Loop\CLS_Expression_LoopForEach.cs" />
     <Compile Include="CSLight\Expression\Loop\CLS_Expression_LoopFor.cs" />
     <Compile Include="CSLight\Expression\Loop\CLS_Expression_LoopIf.cs" />
     <Compile Include="CSLight\Expression\Loop\CLS_Expression_LoopReturn.cs" />

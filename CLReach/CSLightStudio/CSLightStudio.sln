@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptTestor", "ScriptTesto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSLight", "CSLight\CSLight.csproj", "{CE211682-B7E0-450A-821C-72E1DA78390E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLScriptTestor", "CLScriptTestor\CLScriptTestor.csproj", "{76074628-FC6D-4B22-B3FA-BFCD879DAE16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{CE211682-B7E0-450A-821C-72E1DA78390E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE211682-B7E0-450A-821C-72E1DA78390E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE211682-B7E0-450A-821C-72E1DA78390E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76074628-FC6D-4B22-B3FA-BFCD879DAE16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76074628-FC6D-4B22-B3FA-BFCD879DAE16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76074628-FC6D-4B22-B3FA-BFCD879DAE16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76074628-FC6D-4B22-B3FA-BFCD879DAE16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -49,10 +49,18 @@ namespace CSLight
         {
             if (type == null)
                 return typess["null"];
+            if(types.ContainsKey(type)==false)
+            {
+                logger.Log_Error("(CLScript)类型未注册:"+type.ToString());
+            }
             return types[type];
         }
         public ICLS_Type GetTypeByKeyword(string keyword)
         {
+            if(typess.ContainsKey(keyword)==false)
+            {
+                logger.Log_Error("(CLScript)类型未注册:" + keyword);
+            }
             return typess[keyword];
         }
 
@@ -70,7 +78,11 @@ namespace CSLight
             private set;
         }
         public ICLS_Debugger debugger;
-        ICLS_TokenParser tokenParser = null;
+        public ICLS_TokenParser tokenParser
+        {
+            get;
+            private set;
+        }
         ICLS_Expression_Compiler compiler = null;
         public IList<Token> ParserToken(string code)
         {

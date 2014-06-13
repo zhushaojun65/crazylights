@@ -430,7 +430,24 @@ namespace CSLight
                 Token t;
                 n = GetToken(line, n, out t);
                 if (n >= 0)
+                {
+                    if (t.type== TokenType.IDENTIFIER&& ts[ts.Count - 1].text == "." && ts[ts.Count - 2].type == TokenType.TYPE)
+                    {
+                        string ntype = ts[ts.Count - 2].text + ts[ts.Count - 1].text + t.text;
+                        if(types.Contains(ntype))
+                        {//类中类，合并之
+                            t.type = TokenType.TYPE;
+                            t.text = ntype;
+                            t.col = ts[ts.Count - 2].col;
+                            ts.RemoveAt(ts.Count - 1);
+                            ts.RemoveAt(ts.Count - 1);
+
+                        }
+                    }
+
                     ts.Add(t);
+
+                }
             }
             return ts;
         }

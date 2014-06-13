@@ -431,7 +431,7 @@ namespace CSLight
                 n = GetToken(line, n, out t);
                 if (n >= 0)
                 {
-                    if (t.type== TokenType.IDENTIFIER&& ts[ts.Count - 1].text == "." && ts[ts.Count - 2].type == TokenType.TYPE)
+                    if (ts.Count>=2&&t.type == TokenType.IDENTIFIER && ts[ts.Count - 1].text == "." && ts[ts.Count - 2].type == TokenType.TYPE)
                     {
                         string ntype = ts[ts.Count - 2].text + ts[ts.Count - 1].text + t.text;
                         if(types.Contains(ntype))

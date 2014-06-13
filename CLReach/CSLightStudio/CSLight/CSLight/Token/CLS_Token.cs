@@ -70,6 +70,10 @@ namespace CSLight
             keywords.Add("false");
             keywords.Add("null");
             keywords.Add("new");
+            keywords.Add("foreach");
+            keywords.Add("in");
+
+
         }
         public List<string> types
         {
@@ -87,7 +91,7 @@ namespace CSLight
             int n = npos;
             for (int i = n; i < line.Length; i++)
             {
-                if (!char.IsSeparator(line, i) && line[i] != '\n' &&line[i]!='\r')
+                if (!char.IsSeparator(line, i) && line[i] != '\n' && line[i] != '\r' && line[i] != '\t')
                 {
                     return i;
                 }
@@ -402,7 +406,7 @@ namespace CSLight
             {
                 //不可识别逻辑
                 int i = nstart + 1;
-                while (i < line.Length - 1 && char.IsSeparator(line, i) == false && line[i] != '\n' && line[i] != '\r')
+                while (i < line.Length - 1 && char.IsSeparator(line, i) == false && line[i] != '\n' && line[i] != '\r' && line[i] != '\t')
                 {
                     i++;
                 }

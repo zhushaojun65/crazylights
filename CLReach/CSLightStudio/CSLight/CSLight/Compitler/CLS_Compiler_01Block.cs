@@ -10,7 +10,7 @@ namespace CSLight
             string str = "";
             for (int i = pos; i <= posend;i++ )
             {
-                str += tlist[i] + ",";
+                str += tlist[i].text + " ";
             }
             logger.Log_Error(text+":" + str + "(" + pos + "-" + posend + ")");
         }
@@ -363,6 +363,14 @@ namespace CSLight
                         if (tlist[expbegin].text == "for")
                         {
                             ICLS_Expression subvalue = Compiler_Expression_Loop_For(tlist,content, expbegin, expend);
+                            if (null == subvalue) return false;
+                            else
+                                values.Add(subvalue);
+                            bTest = true;
+                        }
+                        else if (tlist[expbegin].text == "foreach")
+                        {
+                            ICLS_Expression subvalue = Compiler_Expression_Loop_ForEach(tlist, content, expbegin, expend);
                             if (null == subvalue) return false;
                             else
                                 values.Add(subvalue);

@@ -107,6 +107,10 @@ namespace CSLight
 
             var targetop = type.GetMethod(func,types.ToArray());
             CLS_Content.Value v = new CLS_Content.Value();
+            if(targetop==null)
+            {
+                throw new Exception("function:"+type.ToString()+"." + func + "没找到");
+            }
             v.value = targetop.Invoke(object_this, _oparams.ToArray());
             v.type = targetop.ReturnType;
             return v;

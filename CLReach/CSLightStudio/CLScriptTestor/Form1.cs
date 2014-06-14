@@ -16,20 +16,31 @@ namespace CLScriptTestor
             InitializeComponent();
         }
         CSLight.CLS_Environment scriptService;
-
+        class UserData
+        {
+            public static UserData g_this = new UserData();
+            public static UserData Instance()
+            {
+                return g_this;
+            }
+            public Dictionary<string, string> HeroDataMap = new Dictionary<string, string>();
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             scriptService = new CSLight.CLS_Environment(this); //初始化CLScript
             scriptService.RegFunction(new CSLight.RegHelper_Function((_call)testCallAdd));
             scriptService.RegFunction(new CSLight.RegHelper_Function((_call)testCallDec));
             scriptService.RegFunction(new CSLight.RegHelper_Function((_call2)testCallAdd4));
+            scriptService.RegType(new CSLight.RegHelper_Type(typeof(UserData)));
+
             scriptService.RegType(new CSLight.RegHelper_Type(typeof(CLScriptExt.Country)));
             scriptService.RegType(new CSLight.RegHelper_Type(typeof(CLScriptExt.Vector3)));
             scriptService.RegType(new CSLight.RegHelper_Type(typeof(CLScriptExt.Student)));
             scriptService.RegType(new CSLight.RegHelper_Type(typeof(List<CLScriptExt.Student>), "List<Student>"));
             scriptService.RegType(new CSLight.RegHelper_Type(typeof(List<CLScriptExt.Vector3>), "List<Vector3>"));
             scriptService.RegType(new CSLight.RegHelper_Type(typeof(List<int>), "List<int>"));
-            scriptService.RegType(new CSLight.RegHelper_Type(typeof(CLScriptExt.Student.S1),"Student.S1"));
+            scriptService.RegType(new CSLight.RegHelper_Type(typeof(Dictionary<string, string>), "Dictionary<string,string>"));
+            scriptService.RegType(new CSLight.RegHelper_Type(typeof(CLScriptExt.Student.S1), "Student.S1"));
 
             scriptService.RegType(new CSLight.RegHelper_Type(typeof(DateTime)));
             scriptService.RegType(new CSLight.RegHelper_Type(typeof(TimeSpan)));

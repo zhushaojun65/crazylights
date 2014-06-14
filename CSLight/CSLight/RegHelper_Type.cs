@@ -76,6 +76,10 @@ namespace CSLight
             var targetp = type.GetProperty(valuename);
             if (targetp != null)
             {
+                if (value != null && value.GetType() != targetp.PropertyType)
+                {
+                    value = environment.GetType(value.GetType()).ConvertTo(environment, value, targetp.PropertyType);
+                }
                 targetp.SetValue(null, value, null);
                 return;
             }
@@ -84,6 +88,10 @@ namespace CSLight
                 var targetf = type.GetField(valuename);
                 if (targetf != null)
                 {
+                    if (value != null && value.GetType() != targetf.FieldType)
+                    {
+                        value = environment.GetType(value.GetType()).ConvertTo(environment, value, targetf.FieldType);
+                    }
                     targetf.SetValue(null, value);
                     return;
                 }
@@ -96,7 +104,7 @@ namespace CSLight
 
         public CLS_Content.Value MemberCall(CLS_Environment environment, object object_this, string func, IList<CLS_Content.Value> _params)
         {
-          
+
             List<Type> types = new List<Type>();
             List<object> _oparams = new List<object>();
             foreach (var p in _params)
@@ -105,11 +113,11 @@ namespace CSLight
                 types.Add(p.type);
             }
 
-            var targetop = type.GetMethod(func,types.ToArray());
+            var targetop = type.GetMethod(func, types.ToArray());
             CLS_Content.Value v = new CLS_Content.Value();
-            if(targetop==null)
+            if (targetop == null)
             {
-                throw new Exception("function:"+type.ToString()+"." + func + "没找到");
+                throw new Exception("function:" + type.ToString() + "." + func + "没找到");
             }
             v.value = targetop.Invoke(object_this, _oparams.ToArray());
             v.type = targetop.ReturnType;
@@ -146,6 +154,11 @@ namespace CSLight
             var targetp = type.GetProperty(valuename);
             if (targetp != null)
             {
+                if (value != null && value.GetType() != targetp.PropertyType)
+                {
+                    value = environment.GetType(value.GetType()).ConvertTo(environment, value, targetp.PropertyType);
+                }
+
                 targetp.SetValue(object_this, value, null);
                 return;
             }
@@ -154,6 +167,11 @@ namespace CSLight
                 var targetf = type.GetField(valuename);
                 if (targetf != null)
                 {
+                    if (value != null && value.GetType() != targetf.FieldType)
+                    {
+
+                        value = environment.GetType(value.GetType()).ConvertTo(environment, value, targetf.FieldType);
+                    }
                     targetf.SetValue(object_this, value);
                     return;
                 }
@@ -226,15 +244,15 @@ namespace CSLight
 
         public object ConvertTo(CLS_Environment env, object src, Type targetType)
         {
-            
+
             //type.get
             //var m =type.GetMembers();
-            var ms =type.GetMethods();
-            foreach(var m in ms)
+            var ms = type.GetMethods();
+            foreach (var m in ms)
             {
-                if((m.Name=="op_Implicit"||m.Name=="op_Explicit")&&m.ReturnType==targetType)
+                if ((m.Name == "op_Implicit" || m.Name == "op_Explicit") && m.ReturnType == targetType)
                 {
-                    return m.Invoke(null,new object[]{src});
+                    return m.Invoke(null, new object[] { src });
                 }
             }
 
@@ -247,15 +265,15 @@ namespace CSLight
             System.Reflection.MethodInfo call = null;
             //var m = type.GetMethods();
             if (code == '+')
-                call = type.GetMethod("op_Addition");
+                call = type.GetMethod("op_Addition", new Type[] { this.type, right.type });
             else if (code == '-')//base = {CLScriptExt.Vector3 op_Subtraction(CLScriptExt.Vector3, CLScriptExt.Vector3)}
-                call = type.GetMethod("op_Subtraction");
+                call = type.GetMethod("op_Subtraction",new Type[]{this.type,right.type});
             else if (code == '*')//[2] = {CLScriptExt.Vector3 op_Multiply(CLScriptExt.Vector3, CLScriptExt.Vector3)}
-                call = type.GetMethod("op_Multiply");
+                call = type.GetMethod("op_Multiply", new Type[] { this.type, right.type });
             else if (code == '/')//[3] = {CLScriptExt.Vector3 op_Division(CLScriptExt.Vector3, CLScriptExt.Vector3)}
-                call = type.GetMethod("op_Division");
+                call = type.GetMethod("op_Division", new Type[] { this.type, right.type });
             else if (code == '%')//[4] = {CLScriptExt.Vector3 op_Modulus(CLScriptExt.Vector3, CLScriptExt.Vector3)}
-                call = type.GetMethod("op_Modulus");
+                call = type.GetMethod("op_Modulus", new Type[] { this.type, right.type });
             var obj = call.Invoke(null, new object[] { left, right.value });
             //function.StaticCall(env,"op_Addtion",new List<ICL>{})
             return obj;

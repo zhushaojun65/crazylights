@@ -9,5 +9,10 @@ namespace CLScriptExt
     {
         public string name;
         public int age;
+        public class S1
+        {
+            public int v;
+        }
+        public List<int> vs = new List<int>();
     }
 }

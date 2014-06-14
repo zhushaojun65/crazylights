@@ -166,7 +166,7 @@ namespace CSLight
                         }
                         else
                         {
-                            throw new Exception("非法的Member Set表达式");
+                            throw new Exception("非法的Member Set表达式"+valueleft);
                         }
 
 
@@ -198,7 +198,7 @@ namespace CSLight
 
                         else
                         {
-                            throw new Exception("不可识别的表达式");
+                            throw new Exception("不可识别的表达式"+ valueleft+"."+valueright);
                         }
 
                         //value.listParam.Add(valueright);

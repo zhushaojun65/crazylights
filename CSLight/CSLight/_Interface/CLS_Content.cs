@@ -89,7 +89,7 @@ namespace CSLight
 
         public void DefineAndSet(string name,Type type,object value)
         {
-            if (values.ContainsKey(name)) throw new Exception("已经定义过");
+            if (values.ContainsKey(name)) throw new Exception(type.ToString()+":"+name+"已经定义过");
             Value v = new Value();
             v.type = type;
             v.value = value;
@@ -97,7 +97,7 @@ namespace CSLight
         }
         public Value Get(string name)
         {
-            if (!values.ContainsKey(name)) throw new Exception("值没有定义过");
+            if (!values.ContainsKey(name)) throw new Exception("值"+name+"没有定义过");
             return values[name];
         }
     }

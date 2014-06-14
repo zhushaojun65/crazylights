@@ -16,7 +16,6 @@ namespace CSLight
         public CLS_Environment(ICLS_Logger logger)
         {
             this.logger = logger;
-            this.debugger = this.logger as ICLS_Debugger;
             tokenParser = new CLS_TokenParser();
             compiler = new CLS_Expression_Compiler(logger);
             RegType(new CLS_Type_Int());
@@ -77,7 +76,7 @@ namespace CSLight
             get;
             private set;
         }
-        public ICLS_Debugger debugger;
+        //public ICLS_Debugger debugger;
         public ICLS_TokenParser tokenParser
         {
             get;

@@ -8,17 +8,7 @@ using System.Windows.Forms;
 
 namespace CSLightFrameworkDemo
 {
-    public interface MyType
-    {
-        void AddTextToList(string str);
-        void SetColorRed();
-        void SetColorBlue();
 
-        CSLight.Framework.ICodeFile<MyType> script
-        {
-            get;
-        }
-    }
     public partial class Form1 : Form,MyType
     {
         public Form1()
@@ -40,6 +30,8 @@ namespace CSLightFrameworkDemo
             {
                 base.Init();
                 this.scriptEnv.RegType(new CSLight.RegHelper_Type(typeof(MyType)));
+
+                this.scriptEnv.RegType(new CSLight.RegHelper_Type(typeof(A.B),"A.B"));
             }
         }
 
@@ -118,5 +110,22 @@ namespace CSLightFrameworkDemo
         }
     }
 
+    public interface MyType
+    {
+        void AddTextToList(string str);
+        void SetColorRed();
+        void SetColorBlue();
 
+        CSLight.Framework.ICodeFile<MyType> script
+        {
+            get;
+        }
+    }
+    public class A
+    {
+        public class B
+        {
+
+        }
+    }
 }

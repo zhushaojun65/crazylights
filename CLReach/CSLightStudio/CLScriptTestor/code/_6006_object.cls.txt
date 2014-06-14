@@ -7,3 +7,4 @@ string d = data["1"];
 
 string d2=UserData.Instance().HeroDataMap["10"];
 
+return "d="+d+",d2="+d2;

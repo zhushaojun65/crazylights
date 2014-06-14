@@ -29,7 +29,10 @@ namespace CLScriptTestor
             scriptService.RegType(new CSLight.RegHelper_Type(typeof(List<CLScriptExt.Student>), "List<Student>"));
             scriptService.RegType(new CSLight.RegHelper_Type(typeof(List<CLScriptExt.Vector3>), "List<Vector3>"));
             scriptService.RegType(new CSLight.RegHelper_Type(typeof(List<int>), "List<int>"));
-       
+            scriptService.RegType(new CSLight.RegHelper_Type(typeof(CLScriptExt.Student.S1),"Student.S1"));
+
+            scriptService.RegType(new CSLight.RegHelper_Type(typeof(DateTime)));
+            scriptService.RegType(new CSLight.RegHelper_Type(typeof(TimeSpan)));
             //CLScriptExt.Type_Vector3());
             InitCodeFile();
             ScriptNET.Runtime.RuntimeHost.Initialize();
@@ -41,7 +44,6 @@ namespace CLScriptTestor
 
         static int testCallAdd(int a, int b)
         {
-            Console.WriteLine("a=" + a + ",b=" + b);
             return a + b;
         }
         static int testCallDec(int a, int b)

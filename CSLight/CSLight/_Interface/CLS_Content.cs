@@ -78,6 +78,10 @@ namespace CSLight
             Value v = new Value();
             v.type = type;
             values[name] = v;
+            if (tvalues.Count > 0)
+            {
+                tvalues.Peek().Add(name);//暂存临时变量
+            }
         }
         public void Set(string name,object value)
         {
@@ -94,11 +98,28 @@ namespace CSLight
             v.type = type;
             v.value = value;
             values[name] = v;
+            if(tvalues.Count>0)
+            {
+                tvalues.Peek().Add(name);//暂存临时变量
+            }
         }
         public Value Get(string name)
         {
             if (!values.ContainsKey(name)) throw new Exception("值"+name+"没有定义过");
             return values[name];
+        }
+        public Stack<List<string>> tvalues = new Stack<List<string>>();
+        public void DepthAdd()//控制变量作用域，深一层
+        {
+            tvalues.Push(new List<string>());
+        }
+        public void DepthRemove()//控制变量作用域，退出一层，上一层的变量都清除
+        {
+            List<string> list = tvalues.Pop();
+            foreach(var v in list)
+            {
+                values.Remove(v);
+            }
         }
     }
 }

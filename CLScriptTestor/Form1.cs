@@ -44,6 +44,7 @@ namespace CLScriptTestor
 
         static int testCallAdd(int a, int b)
         {
+            Console.WriteLine("a=" + a+ " b=" + b);
             return a + b;
         }
         static int testCallDec(int a, int b)

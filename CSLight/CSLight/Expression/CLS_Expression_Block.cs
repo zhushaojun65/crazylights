@@ -19,6 +19,7 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
+            content.DepthAdd();
             CLS_Content.Value value = null;
             foreach (ICLS_Expression i in listParam)
             {
@@ -29,6 +30,7 @@ namespace CSLight
 
                 if (value!=null&&value.breakBlock != 0) break;
             }
+            content.DepthRemove();
             return value;
         }
 

@@ -1,5 +1,5 @@
-﻿/// CLScript 库 由疯光无线开发
-/// 正式名称C#Lite
+﻿/// CSLight 库 由疯光无线开发
+/// 正式名称C#Light V0.20
 /// crazylights.cnblogs.com
 /// 请勿删除此声明
 using System;

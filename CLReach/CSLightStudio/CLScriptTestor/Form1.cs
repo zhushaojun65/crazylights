@@ -98,7 +98,17 @@ namespace CLScriptTestor
         private void button1_Click(object sender, EventArgs e)
         {
             IList<CSLight.Token> tokens = this.scriptService.ParserToken(richTextBox_Code.Text);
+            using(System.IO.Stream fiels = System.IO.File.OpenWrite(curCodeFile+".bytes"))
+            {
+                this.scriptService.tokenParser.SaveTokenList(tokens, fiels);
+            }
+
             ParseTokenFromat(tokens, this.richTextBox_Code);
+
+            using (System.IO.Stream fiels = System.IO.File.OpenRead(curCodeFile + ".bytes"))
+            {
+                tokens = this.scriptService.tokenParser.ReadTokenList(fiels);
+            }
 
         }
         int ParseTokenFromat(IList<CSLight.Token> tlist, RichTextBox rbox)
@@ -201,10 +211,19 @@ namespace CLScriptTestor
             try
             {
                 tokens = this.scriptService.ParserToken(richTextBox_Code.Text);
+                using (System.IO.Stream fiels = System.IO.File.OpenWrite(curCodeFile + ".bytes"))
+                {
+                    this.scriptService.tokenParser.SaveTokenList(tokens, fiels);
+                }
+
             }
             catch (Exception err)
             {
                 Log_Error("词法识别失败");
+            }
+            using (System.IO.Stream fiels = System.IO.File.OpenRead(curCodeFile + ".bytes"))
+            {
+                tokens = this.scriptService.tokenParser.ReadTokenList(fiels);
             }
             if (tokens != null && tokens.Count > 0)
             {

@@ -43,6 +43,11 @@ namespace CSLight
             get;
         }
         IList<Token> Parse(string line);
+
+        void SaveTokenList(IList<Token> tokens, System.IO.Stream stream);
+
+        IList<Token> ReadTokenList(System.IO.Stream stream);
+
     }
     public class CLS_TokenParser : ICLS_TokenParser
     {
@@ -288,7 +293,7 @@ namespace CSLight
                         return nstart + t.text.Length;
                     }
                 }
-                if(line[i]=='<'|| line[i]=='[')//检查特别类型
+                if (line[i] == '<' || line[i] == '[')//检查特别类型
                 {
                     foreach (string s in types)
                     {
@@ -389,9 +394,9 @@ namespace CSLight
                     }
                     else
                     {
-                        if (dend  < line.Length && line[dend ] == 'f')
+                        if (dend < line.Length && line[dend] == 'f')
                         {
-                            t.text = line.Substring(nstart, dend - nstart+1);
+                            t.text = line.Substring(nstart, dend - nstart + 1);
                         }
                         else
                         {
@@ -435,10 +440,10 @@ namespace CSLight
                 n = GetToken(line, n, out t);
                 if (n >= 0)
                 {
-                    if (ts.Count>=2&&t.type == TokenType.IDENTIFIER && ts[ts.Count - 1].text == "." && ts[ts.Count - 2].type == TokenType.TYPE)
+                    if (ts.Count >= 2 && t.type == TokenType.IDENTIFIER && ts[ts.Count - 1].text == "." && ts[ts.Count - 2].type == TokenType.TYPE)
                     {
                         string ntype = ts[ts.Count - 2].text + ts[ts.Count - 1].text + t.text;
-                        if(types.Contains(ntype))
+                        if (types.Contains(ntype))
                         {//类中类，合并之
                             t.type = TokenType.TYPE;
                             t.text = ntype;
@@ -454,6 +459,76 @@ namespace CSLight
                 }
             }
             return ts;
+        }
+
+        public void SaveTokenList(IList<Token> tokens, System.IO.Stream stream)
+        {
+            Dictionary<string, UInt32> strs = new Dictionary<string, UInt32>();
+            List<string> strstore = new List<string>();
+            List<UInt32> strindex = new List<UInt32>();
+            if (tokens.Count > 0xffff)
+            {
+                throw new Exception("不支持这么复杂的token保存");
+            }
+            byte[] bs = BitConverter.GetBytes((UInt16)tokens.Count);
+            stream.Write(bs, 0, bs.Length);
+            foreach (var t in tokens)
+            {
+                UInt32 type = (UInt32)t.type;
+                if (strs.ContainsKey(t.text) == false)
+                {
+                    strstore.Add(t.text);
+                    strs[t.text] = (uint)(strs.Count * 0x0100);
+                }
+
+                type += strs[t.text];
+                strindex.Add(type);
+            }
+
+            byte[] bsstr = BitConverter.GetBytes((UInt16)strstore.Count);
+            stream.Write(bsstr, 0, bsstr.Length);
+            foreach (var s in strstore)
+            {
+                byte[] sbs = System.Text.Encoding.UTF8.GetBytes(s);
+                byte[] sbslen = BitConverter.GetBytes((UInt16)sbs.Length);
+
+                stream.Write(sbslen, 0, sbslen.Length);
+                stream.Write(sbs, 0, sbs.Length);
+            }
+            foreach (var i in strindex)
+            {
+                byte[] nbs = BitConverter.GetBytes((UInt32)i);
+                stream.Write(nbs, 0, nbs.Length);
+            }
+        }
+        public IList<Token> ReadTokenList(System.IO.Stream stream)
+        {
+            byte[] bs = new byte[0xffff];
+            stream.Read(bs, 0, 2);
+            UInt16 len = BitConverter.ToUInt16(bs, 0);
+            stream.Read(bs, 0, 2);
+            UInt16 lenstr = BitConverter.ToUInt16(bs, 0);
+
+            List<string> strstore = new List<string>();
+            List<Token> tokens = new List<Token>();
+            for (int i = 0; i < lenstr; i++)
+            {
+                stream.Read(bs, 0, 2);
+                UInt16 slen = BitConverter.ToUInt16(bs, 0);
+                stream.Read(bs, 0, slen);
+                strstore.Add(System.Text.Encoding.UTF8.GetString(bs, 0, slen));
+            }
+            for (int i = 0; i < len; i++)
+            {
+                Token t = new Token();
+                stream.Read(bs, 0, 4);
+                UInt32 type = BitConverter.ToUInt32(bs, 0);
+                t.type = (TokenType)(type % 0x0100);
+                t.text = strstore[(int)(type / 0x100)];
+                tokens.Add(t);
+            }
+
+            return tokens;
         }
     }
 }

@@ -112,6 +112,7 @@ namespace CSLight
                 _oparams.Add(p.value);
                 types.Add(p.type);
             }
+
             var targetop = type.GetMethod(func, types.ToArray());
             CLS_Content.Value v = new CLS_Content.Value();
             if (targetop == null)
@@ -186,7 +187,7 @@ namespace CSLight
 
         public virtual CLS_Content.Value IndexGet(CLS_Environment environment, object object_this, object key)
         {
-            var m =type.GetMembers();
+            //var m =type.GetMembers();
             var targetop = type.GetMethod("get_Item");
             if(targetop==null)
             {

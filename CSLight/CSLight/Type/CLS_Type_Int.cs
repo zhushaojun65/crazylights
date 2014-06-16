@@ -109,7 +109,7 @@ namespace CSLight
                 else if (code == '%')
                     return (float)(int)left % (float)right.value;
             }
-            throw new NotImplementedException();
+            throw new NotImplementedException("code:"+code +" right:+"+right.type.ToString()+"="+ right.value);
         }
 
         public bool MathLogic(CLS_Environment env, logictoken code, object left, CLS_Content.Value right)

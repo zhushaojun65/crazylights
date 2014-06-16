@@ -39,6 +39,8 @@ namespace CLScriptTestor
             scriptService.RegType(new CSLight.RegHelper_Type(typeof(List<CLScriptExt.Student>), "List<Student>"));
             scriptService.RegType(new CSLight.RegHelper_Type(typeof(List<CLScriptExt.Vector3>), "List<Vector3>"));
             scriptService.RegType(new CSLight.RegHelper_Type(typeof(List<int>), "List<int>"));
+            scriptService.RegType(new CSLight.RegHelper_Type(typeof(int[]), "int[]"));
+
             scriptService.RegType(new CSLight.RegHelper_Type(typeof(Dictionary<string, string>), "Dictionary<string,string>"));
             scriptService.RegType(new CSLight.RegHelper_Type(typeof(CLScriptExt.Student.S1), "Student.S1"));
 

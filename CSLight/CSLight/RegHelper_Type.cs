@@ -11,7 +11,7 @@ namespace CSLight
         {
             this.type = type;
         }
-        public CLS_Content.Value New(CLS_Environment environment, IList<CLS_Content.Value> _params)
+        public virtual CLS_Content.Value New(CLS_Environment environment, IList<CLS_Content.Value> _params)
         {
 
             List<Type> types = new List<Type>();
@@ -27,7 +27,7 @@ namespace CSLight
             value.value = con.Invoke(objparams.ToArray());
             return value;
         }
-        public CLS_Content.Value StaticCall(CLS_Environment environment, string function, IList<CLS_Content.Value> _params)
+        public virtual CLS_Content.Value StaticCall(CLS_Environment environment, string function, IList<CLS_Content.Value> _params)
         {
 
             List<object> _oparams = new List<object>();
@@ -46,7 +46,7 @@ namespace CSLight
 
         }
 
-        public CLS_Content.Value StaticValueGet(CLS_Environment environment, string valuename)
+        public virtual CLS_Content.Value StaticValueGet(CLS_Environment environment, string valuename)
         {
             var targetp = type.GetProperty(valuename);
             if (targetp != null)
@@ -70,7 +70,7 @@ namespace CSLight
             return null;
         }
 
-        public void StaticValueSet(CLS_Environment environment, string valuename, object value)
+        public virtual void StaticValueSet(CLS_Environment environment, string valuename, object value)
         {
 
             var targetp = type.GetProperty(valuename);
@@ -102,7 +102,7 @@ namespace CSLight
             throw new NotImplementedException();
         }
 
-        public CLS_Content.Value MemberCall(CLS_Environment environment, object object_this, string func, IList<CLS_Content.Value> _params)
+        public virtual CLS_Content.Value MemberCall(CLS_Environment environment, object object_this, string func, IList<CLS_Content.Value> _params)
         {
 
             List<Type> types = new List<Type>();
@@ -112,7 +112,6 @@ namespace CSLight
                 _oparams.Add(p.value);
                 types.Add(p.type);
             }
-
             var targetop = type.GetMethod(func, types.ToArray());
             CLS_Content.Value v = new CLS_Content.Value();
             if (targetop == null)
@@ -124,7 +123,7 @@ namespace CSLight
             return v;
         }
 
-        public CLS_Content.Value MemberValueGet(CLS_Environment environment, object object_this, string valuename)
+        public virtual CLS_Content.Value MemberValueGet(CLS_Environment environment, object object_this, string valuename)
         {
             var targetp = type.GetProperty(valuename);
             if (targetp != null)
@@ -148,7 +147,7 @@ namespace CSLight
             return null;
         }
 
-        public void MemberValueSet(CLS_Environment environment, object object_this, string valuename, object value)
+        public virtual void MemberValueSet(CLS_Environment environment, object object_this, string valuename, object value)
         {
 
             var targetp = type.GetProperty(valuename);
@@ -185,10 +184,15 @@ namespace CSLight
 
 
 
-        public CLS_Content.Value IndexGet(CLS_Environment environment, object object_this, object key)
+        public virtual CLS_Content.Value IndexGet(CLS_Environment environment, object object_this, object key)
         {
-            //var m =type.GetMembers();
+            var m =type.GetMembers();
             var targetop = type.GetMethod("get_Item");
+            if(targetop==null)
+            {
+                targetop = type.GetMethod("Get");
+            }
+            
             CLS_Content.Value v = new CLS_Content.Value();
             v.type = targetop.ReturnType;
             v.value = targetop.Invoke(object_this, new object[] { key });
@@ -196,7 +200,7 @@ namespace CSLight
 
         }
 
-        public void IndexSet(CLS_Environment environment, object object_this, object key, object value)
+        public virtual void IndexSet(CLS_Environment environment, object object_this, object key, object value)
         {
             var targetop = type.GetMethod("set_Item");
             targetop.Invoke(object_this, new object[] { key, value });
@@ -222,16 +226,16 @@ namespace CSLight
         public string keyword
         {
             get;
-            private set;
+            protected set;
         }
 
         public Type type
         {
             get;
-            private set;
+            protected set;
         }
 
-        public ICLS_Value MakeValue(object value) //这个方法可能存在AOT陷阱
+        public virtual ICLS_Value MakeValue(object value) //这个方法可能存在AOT陷阱
         {
             //这个方法可能存在AOT陷阱
             //Type target = typeof(CLS_Value_Value<>).MakeGenericType(new Type[] { type }); 
@@ -242,7 +246,7 @@ namespace CSLight
             return rvalue;
         }
 
-        public object ConvertTo(CLS_Environment env, object src, Type targetType)
+        public virtual object ConvertTo(CLS_Environment env, object src, Type targetType)
         {
 
             //type.get
@@ -259,7 +263,7 @@ namespace CSLight
             return src;
         }
 
-        public object Math2Value(CLS_Environment env, char code, object left, CLS_Content.Value right, out Type returntype)
+        public virtual object Math2Value(CLS_Environment env, char code, object left, CLS_Content.Value right, out Type returntype)
         {
             returntype = type;
             System.Reflection.MethodInfo call = null;
@@ -279,7 +283,7 @@ namespace CSLight
             return obj;
         }
 
-        public bool MathLogic(CLS_Environment env, logictoken code, object left, CLS_Content.Value right)
+        public virtual bool MathLogic(CLS_Environment env, logictoken code, object left, CLS_Content.Value right)
         {
             System.Reflection.MethodInfo call = null;
 
@@ -303,7 +307,7 @@ namespace CSLight
         public ICLS_TypeFunction function
         {
             get;
-            private set;
+            protected set;
         }
     }
 }

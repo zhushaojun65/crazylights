@@ -453,6 +453,20 @@ namespace CSLight
 
                         }
                     }
+                    if (ts.Count >= 3 && t.type == TokenType.PUNCTUATION &&t.text==">"
+                        && ts[ts.Count - 1].type == TokenType.TYPE
+                        && ts[ts.Count - 2].type == TokenType.PUNCTUATION&&ts[ts.Count-2].text=="<"
+                        && ts[ts.Count-3].type== TokenType.IDENTIFIER )
+                    {//模板函数调用,合并之
+                        string ntype =ts[ts.Count-3].text+ ts[ts.Count - 2].text + ts[ts.Count - 1].text + t.text;
+                        t.type = TokenType.IDENTIFIER;
+                        t.text = ntype;
+                        t.col = ts[ts.Count - 2].col;
+                        ts.RemoveAt(ts.Count - 1);
+                        ts.RemoveAt(ts.Count - 1);
+                        ts.RemoveAt(ts.Count - 1);
+                    }
+
 
                     ts.Add(t);
 

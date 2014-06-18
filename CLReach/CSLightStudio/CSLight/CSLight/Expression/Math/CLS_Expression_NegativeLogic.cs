@@ -20,8 +20,14 @@ namespace CSLight
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
             CLS_Content.Value r = listParam[0].ComputeValue(content);
-            r.value = !(bool)r.value;
-            return r;
+
+
+            CLS_Content.Value r2 = new CLS_Content.Value();
+            r2.type = r.type;
+            r2.breakBlock = r.breakBlock;
+            r2.value = !(bool)r.value;
+           
+            return r2;
         }
 
 

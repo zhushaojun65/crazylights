@@ -26,7 +26,7 @@ namespace CSLight
             {
                 if (value == null)
                 {
-                    LogError(tlist,"编译为null:" ,expbegin, expend);
+                    logger.Log_Warn("编译为null:");
                 }
                 return value;
 
@@ -51,7 +51,7 @@ namespace CSLight
             {
                 if (value == null)
                 {
-                    LogError(tlist,"编译为null:" ,expbegin ,expend);
+                    logger.Log_Warn("编译为null:");
                 }
                 return value;
 

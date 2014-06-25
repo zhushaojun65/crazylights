@@ -705,7 +705,10 @@ namespace CSLight
                     }
                         else if (tokens[i].text == "[")
                     {
-                        list.Add(i);
+                        if (dep == 0)
+                        {
+                            list.Add(i);
+                        }
                         dep++;
                         skip = i + 1;
                         continue;

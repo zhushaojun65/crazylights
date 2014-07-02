@@ -19,23 +19,26 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
-            CLS_Content.Value result = new CLS_Content.Value();
+            content.InStack(this);
+            CLS_Content.Value result = null;
 
 
             {
+                result = new CLS_Content.Value();
                 var left = listParam[0].ComputeValue(content);
                 var right = listParam[1].ComputeValue(content);
                 result.value = content.environment.GetType(left.type).Math2Value(content.environment, mathop, left.value, right, out result.type);
-                return result;
-            }
 
-            return null;
+            }
+            content.OutStack(this);
+            return result;
+
 
         }
 
-  
+
         public char mathop;
-    
+
 
         public override string ToString()
         {

@@ -21,9 +21,10 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
-
-
-            return type.function.StaticValueGet(content.environment, staticmembername);
+            content.InStack(this);
+            var value=type.function.StaticValueGet(content.environment, staticmembername);
+            content.OutStack(this);
+            return value;
 
 
         }

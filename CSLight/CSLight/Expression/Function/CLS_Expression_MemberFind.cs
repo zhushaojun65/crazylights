@@ -19,15 +19,17 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
-
+            content.InStack(this);
             var parent = listParam[0].ComputeValue(content);
             var type = content.environment.GetType(parent.type);
-
-            return type.function.MemberValueGet(content.environment, parent.value, membername);
+            var value=type.function.MemberValueGet(content.environment, parent.value, membername);
+            content.OutStack(this);
+            return value;
             //做数学计算
             //从上下文取值
             //_value = null;
             //return null;
+
         }
 
    

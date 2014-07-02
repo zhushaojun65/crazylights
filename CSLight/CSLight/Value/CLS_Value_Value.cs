@@ -32,9 +32,11 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
+            content.InStack(this);
             CLS_Content.Value v = new CLS_Content.Value();
             v.type = this.type;
             v.value = this.value_value;
+            content.OutStack(this);
             return v;
         }
     }
@@ -70,9 +72,11 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
+            content.InStack(this);
             CLS_Content.Value v = new CLS_Content.Value();
             v.type = this.type;
             v.value = null;
+            content.OutStack(this);
             return v;
         }
     }
@@ -107,11 +111,12 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
+            content.InStack(this);
             CLS_Content.Value v = new CLS_Content.Value();
 
             v.type = this.type;
             v.value = this.value_value;
-
+            content.OutStack(this);
             return v;
         }
     }

@@ -11,9 +11,59 @@ namespace CSLight
             get;
             private set;
         }
-        public CLS_Content(CLS_Environment environment)
+        public CLS_Content(CLS_Environment environment,bool useDebug=true)
         {
             this.environment = environment;
+            this.useDebug = useDebug;
+            if(useDebug)
+            {
+                stacklist = new Stack<ICLS_Expression>();
+            }
+        }
+        public bool useDebug
+        {
+            get;
+            private set;
+        }
+        public Stack<ICLS_Expression> stacklist
+        {
+            get;
+            private set;
+        }
+        public void InStack(ICLS_Expression expr)
+        {
+            if (!useDebug) return;
+            if (stacklist.Count>0&&stacklist.Peek() == expr)
+            {
+                throw new Exception("InStack error");
+            }
+            stacklist.Push(expr);
+        }
+        public void OutStack(ICLS_Expression expr)
+        {
+            if (!useDebug) return;
+            if (stacklist.Peek() != expr)
+            {
+                throw new Exception("OutStack error");
+            }
+            stacklist.Pop();
+        }
+        public string Dump()
+        {
+            string svalues = "";
+            foreach(var v in this.values)
+            {
+                svalues += "key:" + v.Key + "=" + v.Value.ToString()+"\n";
+            }
+            if (useDebug)
+            {
+                foreach(var s in stacklist)
+                {
+                    svalues += "S:" + s.ToString()+"\n";
+                }
+            }
+            return svalues;
+
         }
         public class Value
         {

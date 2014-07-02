@@ -19,6 +19,7 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
+            content.InStack(this);
             CLS_Content.Value result = new CLS_Content.Value();
 
             //if (mathop == "&&" || mathop == "||")
@@ -50,18 +51,19 @@ namespace CSLight
 
                     result.value = (bool)(bleft && bright);
                 }
-                else if(mathop=='|')
+                else if (mathop == '|')
                 {
                     result.value = (bool)(bleft || bright);
                 }
-                return result;
             }
-            return null;
+            content.OutStack(this);
+            return result;
+
         }
 
- 
+
         public char mathop;
-  
+
         public override string ToString()
         {
             return "Math2ValueAndOr|a" + mathop + "b";

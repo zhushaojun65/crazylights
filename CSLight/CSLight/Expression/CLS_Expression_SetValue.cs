@@ -20,7 +20,7 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
-           
+            content.InStack(this);
             {
                 CLS_Content.Value v = listParam[0].ComputeValue(content);
                 Type value_type = content.values[value_name].type;
@@ -32,6 +32,7 @@ namespace CSLight
                 }
                 content.Set(value_name, val);
             }
+            content.OutStack(this);
             return null;
         }
 

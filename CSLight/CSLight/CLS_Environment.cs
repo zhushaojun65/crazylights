@@ -119,7 +119,7 @@ namespace CSLight
         }
         public CLS_Content CreateContent()
         {
-            return new CLS_Content(this);
+            return new CLS_Content(this,true);
         }
 
         public CLS_Content.Value Execute(ICLS_Expression expr, CLS_Content content = null)

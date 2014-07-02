@@ -19,6 +19,7 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
+            content.InStack(this);
             List<CLS_Content.Value> list = new List<CLS_Content.Value>();
             foreach(ICLS_Expression p in listParam)
             {
@@ -32,6 +33,7 @@ namespace CSLight
             //做数学计算
             //从上下文取值
             //_value = null;
+            content.OutStack(this);
             return v;
         }
         public string funcname;

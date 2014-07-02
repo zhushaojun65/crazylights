@@ -19,23 +19,25 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
+            content.InStack(this);
             ICLS_Expression expr_if = listParam[0];
             bool bif = (bool)expr_if.ComputeValue(content).value;
             //if (expr_init != null) expr_init.ComputeValue(content);
             ICLS_Expression expr_go1 = listParam[1];
             ICLS_Expression expr_go2 = null;
             if(listParam.Count>2)expr_go2= listParam[2];
+            CLS_Content.Value value = null;
             if (bif && expr_go1 != null)
             {
 
-                return expr_go1.ComputeValue(content);
+                value= expr_go1.ComputeValue(content);
 
 
             }
             else if (!bif && expr_go2 != null)
             {
 
-                return expr_go2.ComputeValue(content);
+                value= expr_go2.ComputeValue(content);
 
 
             }
@@ -46,6 +48,7 @@ namespace CSLight
             //做数学计算
             //从上下文取值
             //_value = null;
+            content.OutStack(this);
             return null;
         }
 

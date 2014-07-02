@@ -18,6 +18,8 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
+            content.InStack(this);
+
             var v = content.Get(value_name);
             ICLS_Type type = content.environment.GetType(v.type);
             Type returntype;
@@ -29,6 +31,8 @@ namespace CSLight
             //做数学计算
             //从上下文取值
             //_value = null;
+            content.OutStack(this);
+
             return null;
         }
 

@@ -53,7 +53,7 @@ namespace CSLight
             string svalues = "";
             foreach(var v in this.values)
             {
-                svalues += "key:" + v.Key + "=" + v.Value.ToString()+"\n";
+                svalues += "V:" + v.Key + "=" + v.Value.ToString()+"\n";
             }
             if (useDebug)
             {
@@ -65,7 +65,7 @@ namespace CSLight
                     }
                     else
                     {
-                        svalues += "S:";
+                        svalues += "在脚本 :";
                         if (s.tokenEnd - s.tokenBegin >= 10)
                         {
                             for(int i=s.tokenBegin;i<s.tokenBegin+3;i++)

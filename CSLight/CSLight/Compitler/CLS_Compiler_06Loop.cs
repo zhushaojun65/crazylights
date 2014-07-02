@@ -8,11 +8,11 @@ namespace CSLight
 
         public ICLS_Expression Compiler_Expression_Loop_For(IList<Token> tlist, CLS_Content content, int pos, int posend)
         {
-            CLS_Expression_LoopFor value = new CLS_Expression_LoopFor();
             int b1;
             int fs1 = pos + 1;
             int fe1 = FindCodeAny(tlist, ref fs1, out b1);
-            
+            CLS_Expression_LoopFor value = new CLS_Expression_LoopFor(pos, fe1);
+
             int testbegin = fs1 + 1;
             if(b1!=1)
             {
@@ -60,11 +60,11 @@ namespace CSLight
 
         public ICLS_Expression Compiler_Expression_Loop_ForEach(IList<Token> tlist, CLS_Content content, int pos, int posend)
         {
-            CLS_Expression_LoopForEach value = new CLS_Expression_LoopForEach();
+
             int b1;
             int fs1 = pos + 1;
             int fe1 = FindCodeAny(tlist, ref fs1, out b1);
-
+            CLS_Expression_LoopForEach value = new CLS_Expression_LoopForEach(pos,fe1);
             int testbegin = fs1 + 1;
             if (b1 != 1)
             {
@@ -115,7 +115,7 @@ namespace CSLight
         public ICLS_Expression Compiler_Expression_Loop_If(IList<Token> tlist, CLS_Content content, int pos, int posend)
         {
 
-            CLS_Expression_LoopIf value = new CLS_Expression_LoopIf();
+            CLS_Expression_LoopIf value = new CLS_Expression_LoopIf(pos,posend);
             int b1;
             int fs1 = pos + 1;
             int fe1 = FindCodeAny(tlist, ref fs1, out b1);
@@ -130,6 +130,7 @@ namespace CSLight
                 bool succ = Compiler_Expression(tlist,content, fs1, fe1, out subvalue);
                 if (succ)
                 {
+                    value.tokenEnd = fe1;
                     value.listParam.Add(subvalue);
                 }
                 else
@@ -148,6 +149,7 @@ namespace CSLight
                 bool succ = Compiler_Expression_Block(tlist,content, fs2, fe2, out subvalue);
                 if (succ)
                 {
+                    value.tokenEnd = fe2;
                     value.listParam.Add(subvalue);
                 }
                 else
@@ -170,6 +172,7 @@ namespace CSLight
                     bool succ = Compiler_Expression_Block(tlist,content, fs3, fe3, out subvalue);
                     if (succ)
                     {
+                        value.tokenEnd = fe3;
                         value.listParam.Add(subvalue);
                     }
                     else
@@ -184,7 +187,7 @@ namespace CSLight
         }
         public ICLS_Expression Compiler_Expression_Loop_Return(IList<Token> tlist, CLS_Content content, int pos, int posend)
         {
-            CLS_Expression_LoopReturn value = new CLS_Expression_LoopReturn();
+            CLS_Expression_LoopReturn value = new CLS_Expression_LoopReturn(pos,posend);
 
             ICLS_Expression subvalue;
             bool succ = Compiler_Expression(tlist,content, pos + 1, posend, out subvalue);
@@ -197,12 +200,12 @@ namespace CSLight
         }
         public ICLS_Expression Compiler_Expression_Loop_Break(IList<Token> tlist, int pos)
         {
-            CLS_Expression_LoopBreak value = new CLS_Expression_LoopBreak();
+            CLS_Expression_LoopBreak value = new CLS_Expression_LoopBreak(pos,pos);
             return value;
         }
         public ICLS_Expression Compiler_Expression_Loop_Continue(IList<Token> tlist, int pos)
         {
-            CLS_Expression_LoopContinue value = new CLS_Expression_LoopContinue();
+            CLS_Expression_LoopContinue value = new CLS_Expression_LoopContinue(pos,pos);
             return value;
         }
     }

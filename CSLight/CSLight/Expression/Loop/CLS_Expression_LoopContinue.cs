@@ -6,9 +6,10 @@ namespace CSLight
 
     public class CLS_Expression_LoopContinue : ICLS_Expression
     {
-        public CLS_Expression_LoopContinue()
+        public CLS_Expression_LoopContinue(int tbegin,int tend)
         {
-          
+            tokenBegin = tbegin;
+            tokenEnd = tend;
         }
         //Block的参数 一个就是一行，顺序执行，没有
         public List<ICLS_Expression> listParam

@@ -6,9 +6,11 @@ namespace CSLight
 
     public class CLS_Expression_LoopIf : ICLS_Expression
     {
-        public CLS_Expression_LoopIf()
+        public CLS_Expression_LoopIf(int tbegin,int tend)
         {
             listParam = new List<ICLS_Expression>();
+            tokenBegin = tbegin;
+            tokenEnd = tend;
         }
         //Block的参数 一个就是一行，顺序执行，没有
         public List<ICLS_Expression> listParam
@@ -24,7 +26,7 @@ namespace CSLight
         public int tokenEnd
         {
             get;
-            private set;
+            set;
         }
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {

@@ -6,7 +6,7 @@ namespace CSLight
 
     public class CLS_Expression_LoopForEach : ICLS_Expression
     {
-        public CLS_Expression_LoopForEach()
+        public CLS_Expression_LoopForEach(int tbegin,int tend)
         {
             listParam = new List<ICLS_Expression>();
         }

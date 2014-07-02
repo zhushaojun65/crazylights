@@ -6,9 +6,11 @@ namespace CSLight
 
     public class CLS_Expression_NegativeValue : ICLS_Expression
     {
-        public CLS_Expression_NegativeValue()
+        public CLS_Expression_NegativeValue(int tbegin,int tend)
         {
             listParam = new List<ICLS_Expression>();
+            tokenBegin = tbegin;
+            tokenEnd = tend;
         }
         //Block的参数 一个就是一行，顺序执行，没有
         public List<ICLS_Expression> listParam

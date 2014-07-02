@@ -101,7 +101,7 @@ namespace CSLight
                 {
                     ICLS_Expression v;
                     bool succ = Compiler_Expression(tlist, content, oppos + 3, posend , out v);
-                    CLS_Expression_TypeConvert convert = new CLS_Expression_TypeConvert();
+                    CLS_Expression_TypeConvert convert = new CLS_Expression_TypeConvert(pos,posend);
                     convert.listParam.Add(v);
                     convert.targettype = content.environment.GetTypeByKeyword(tlist[oppos + 1].text).type;
 
@@ -122,7 +122,7 @@ namespace CSLight
                 }
                 else   if (tlist[oppos].text == "as")
                      {
-                         CLS_Expression_TypeConvert convert = new CLS_Expression_TypeConvert();
+                         CLS_Expression_TypeConvert convert = new CLS_Expression_TypeConvert(left, oppos + 1);
                          convert.listParam.Add(valueleft);
                          convert.targettype = content.environment.GetTypeByKeyword(tlist[oppos + 1].text).type;
 
@@ -208,7 +208,7 @@ namespace CSLight
                     }
                     else if (tlist[oppos].text == "+=" || tlist[oppos].text == "-=" || tlist[oppos].text == "*=" || tlist[oppos].text == "/=" || tlist[oppos].text == "%=")
                     {
-                        CLS_Expression_SelfOpWithValue value = new CLS_Expression_SelfOpWithValue();
+                        CLS_Expression_SelfOpWithValue value = new CLS_Expression_SelfOpWithValue(left,rightend);
                         value.value_name = ((CLS_Expression_GetValue)valueleft).value_name;
                         value.listParam.Add(valueright);
                         value.mathop = tlist[oppos].text[0];
@@ -216,7 +216,7 @@ namespace CSLight
                     }
                     else if (tlist[oppos].text == "&&" || tlist[oppos].text == "||")
                     {
-                        CLS_Expression_Math2ValueAndOr value = new CLS_Expression_Math2ValueAndOr();
+                        CLS_Expression_Math2ValueAndOr value = new CLS_Expression_Math2ValueAndOr(left,rightend);
                         value.listParam.Add(valueleft);
                         value.listParam.Add(valueright);
                         value.mathop = tlist[oppos].text[0];
@@ -224,7 +224,7 @@ namespace CSLight
                     }
                     else if (tlist[oppos].text == ">" || tlist[oppos].text == ">=" || tlist[oppos].text == "<" || tlist[oppos].text == "<=" || tlist[oppos].text == "==" || tlist[oppos].text == "!=")
                     {
-                        CLS_Expression_Math2ValueLogic value = new CLS_Expression_Math2ValueLogic();
+                        CLS_Expression_Math2ValueLogic value = new CLS_Expression_Math2ValueLogic(left,rightend);
                         value.listParam.Add(valueleft);
                         value.listParam.Add(valueright);
                         logictoken token = logictoken.not_equal;
@@ -257,7 +257,7 @@ namespace CSLight
                     }
                     else
                     {
-                        CLS_Expression_Math2Value value = new CLS_Expression_Math2Value();
+                        CLS_Expression_Math2Value value = new CLS_Expression_Math2Value(left,rightend);
                         value.listParam.Add(valueleft);
                         value.listParam.Add(valueright);
                         value.mathop = tlist[oppos].text[0];
@@ -277,7 +277,7 @@ namespace CSLight
         }
         public ICLS_Expression Compiler_Expression_MathSelf(IList<Token> tlist, int pos, int posend)
         {
-            CLS_Expression_SelfOp value = new CLS_Expression_SelfOp();
+            CLS_Expression_SelfOp value = new CLS_Expression_SelfOp(pos,posend);
             value.value_name = tlist[pos].text;
             value.mathop = tlist[pos + 1].text[0];
 

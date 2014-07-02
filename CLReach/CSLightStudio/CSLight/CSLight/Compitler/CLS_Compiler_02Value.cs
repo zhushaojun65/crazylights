@@ -87,7 +87,7 @@ namespace CSLight
                 bool succ = Compiler_Expression(tlist,content, expbegin, expend2, out subvalue);
                 if (succ && subvalue != null)
                 {
-                    CLS_Expression_NegativeValue v = new CLS_Expression_NegativeValue();
+                    CLS_Expression_NegativeValue v = new CLS_Expression_NegativeValue(pos,expend2);
                     v.listParam.Add(subvalue);
                     return v;
                 }
@@ -114,7 +114,7 @@ namespace CSLight
                 bool succ = Compiler_Expression(tlist, content,expbegin, expend2, out subvalue);
                 if (succ && subvalue != null)
                 {
-                    CLS_Expression_NegativeLogic v = new CLS_Expression_NegativeLogic();
+                    CLS_Expression_NegativeLogic v = new CLS_Expression_NegativeLogic(pos,expend2);
                     v.listParam.Add(subvalue);
                     return v;
                 }

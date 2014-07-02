@@ -6,9 +6,12 @@ namespace CSLight
 
     public class CLS_Expression_LoopFor : ICLS_Expression
     {
-        public CLS_Expression_LoopFor()
+        public CLS_Expression_LoopFor(int tbegin, int tend)
         {
-           listParam= new List<ICLS_Expression>();
+            listParam = new List<ICLS_Expression>();
+            tokenBegin = tbegin;
+            tokenEnd = tend;
+
         }
         //Block的参数 一个就是一行，顺序执行，没有
         public List<ICLS_Expression> listParam
@@ -38,9 +41,9 @@ namespace CSLight
 
             ICLS_Expression expr_block = listParam[3] as ICLS_Expression;
 
-            for (;(bool)expr_continue.ComputeValue(content).value; expr_step.ComputeValue(content))
+            for (; (bool)expr_continue.ComputeValue(content).value; expr_step.ComputeValue(content))
             {
-                if(expr_block!=null)
+                if (expr_block != null)
                 {
                     var v = expr_block.ComputeValue(content);
                     if (v != null && v.breakBlock > 1) break; ;
@@ -58,7 +61,7 @@ namespace CSLight
             //_value = null;
         }
 
-    
+
         public override string ToString()
         {
             return "For|";

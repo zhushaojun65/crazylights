@@ -6,9 +6,11 @@ namespace CSLight
 
     public class CLS_Expression_Define : ICLS_Expression
     {
-        public CLS_Expression_Define()
+        public CLS_Expression_Define(int tbegin,int tend)
         {
             //listParam = new List<ICLS_Value>();
+            this.tokenBegin = tbegin;
+            this.tokenEnd = tend;
         }
         //Block的参数 一个就是一行，顺序执行，没有
         List<ICLS_Expression> _listParam = null;
@@ -23,7 +25,16 @@ namespace CSLight
                 return _listParam;
             }
         }
-
+        public int tokenBegin
+        {
+            get;
+            private set;
+        }
+        public int tokenEnd
+        {
+            get;
+            private set;
+        }
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
             content.InStack(this);

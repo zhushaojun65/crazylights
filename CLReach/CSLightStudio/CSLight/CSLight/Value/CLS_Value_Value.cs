@@ -29,7 +29,16 @@ namespace CSLight
         {
             get { return null; }
         }
-
+        public int tokenBegin
+        {
+            get;
+            private set;
+        }
+        public int tokenEnd
+        {
+            get;
+            private set;
+        }
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
             content.InStack(this);
@@ -69,7 +78,16 @@ namespace CSLight
         {
             get { return null; }
         }
-
+        public int tokenBegin
+        {
+            get;
+            private set;
+        }
+        public int tokenEnd
+        {
+            get;
+            private set;
+        }
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
             content.InStack(this);
@@ -108,7 +126,16 @@ namespace CSLight
         {
             get { throw new NotImplementedException(); }
         }
-
+        public int tokenBegin
+        {
+            get;
+            private set;
+        }
+        public int tokenEnd
+        {
+            get;
+            private set;
+        }
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
             content.InStack(this);

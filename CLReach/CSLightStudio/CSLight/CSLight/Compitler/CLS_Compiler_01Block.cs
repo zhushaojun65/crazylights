@@ -20,6 +20,7 @@ namespace CSLight
             int begin = pos;
             value = null;
             List<ICLS_Expression> values = new List<ICLS_Expression>();
+            int end = 0;
             do
             {
                 if (tlist[begin].type == TokenType.COMMENT)
@@ -34,7 +35,7 @@ namespace CSLight
                 }
                 int bdep;
                 //脱一次壳
-                int end = FindCodeAny(tlist, ref begin, out bdep);
+                end = FindCodeAny(tlist, ref begin, out bdep);
 
                 if (end > posend)
                 {
@@ -86,7 +87,7 @@ namespace CSLight
             }
             else if (values.Count > 1)
             {
-                CLS_Expression_Block block = new CLS_Expression_Block();
+                CLS_Expression_Block block = new CLS_Expression_Block(pos,end);
                 foreach (var v in values)
                     block.listParam.Add(v);
                 value = block;
@@ -204,7 +205,7 @@ namespace CSLight
                     }
                     else
                     {
-                        ICLS_Expression subvalue = Compiler_Expression_Value(tlist[expbegin]);
+                        ICLS_Expression subvalue = Compiler_Expression_Value(tlist[expbegin],expbegin);
                         if (null == subvalue) return false;
                         else
                             values.Add(subvalue);

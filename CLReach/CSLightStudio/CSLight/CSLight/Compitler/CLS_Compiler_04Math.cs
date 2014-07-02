@@ -66,14 +66,14 @@ namespace CSLight
                     CLS_Expression_Function vf = valueright as CLS_Expression_Function;
                     if (vg != null)
                     {
-                        CLS_Expression_StaticFind value = new CLS_Expression_StaticFind();
+                        CLS_Expression_StaticFind value = new CLS_Expression_StaticFind(pos,rightend);
                         value.staticmembername = vg.value_name;
                         value.type = content.environment.GetTypeByKeyword(tlist[pos].text);
                         return value;
                     }
                     else if (vf != null)
                     {
-                        CLS_Expression_StaticFunction value = new CLS_Expression_StaticFunction();
+                        CLS_Expression_StaticFunction value = new CLS_Expression_StaticFunction(pos,rightend);
                         value.functionName = vf.funcname;
                         value.type = content.environment.GetTypeByKeyword(tlist[pos].text);
                         //value.listParam.Add(valueleft);
@@ -115,7 +115,7 @@ namespace CSLight
                 {
                     rightend--;
                     bool succs = Compiler_Expression(tlist, content, right, rightend, out valueright);
-                    CLS_Expression_IndexFind value = new CLS_Expression_IndexFind();
+                    CLS_Expression_IndexFind value = new CLS_Expression_IndexFind(left,rightend);
                     value.listParam.Add(valueleft);
                     value.listParam.Add(valueright);
                     return value;
@@ -141,7 +141,7 @@ namespace CSLight
                         CLS_Expression_IndexFind ifinde = valueleft as CLS_Expression_IndexFind;
                         if (mfinde != null)
                         {
-                            CLS_Expression_MemberSetValue value = new CLS_Expression_MemberSetValue();
+                            CLS_Expression_MemberSetValue value = new CLS_Expression_MemberSetValue(left, rightend);
                             value.membername = mfinde.membername;
                             value.listParam.Add(mfinde.listParam[0]);
                             value.listParam.Add(valueright);
@@ -149,7 +149,7 @@ namespace CSLight
                         }
                         else if (sfinde != null)
                         {
-                            CLS_Expression_StaticSetValue value = new CLS_Expression_StaticSetValue();
+                            CLS_Expression_StaticSetValue value = new CLS_Expression_StaticSetValue(left,rightend);
                             value.staticmembername = sfinde.staticmembername;
                             value.type = sfinde.type;
                             //value.listParam.Add(mfinde.listParam[0]);
@@ -158,7 +158,7 @@ namespace CSLight
                         }
                         else if (ifinde != null)
                         {
-                            CLS_Expression_IndexSetValue value = new CLS_Expression_IndexSetValue();
+                            CLS_Expression_IndexSetValue value = new CLS_Expression_IndexSetValue(left,rightend);
                             value.listParam.Add(ifinde.listParam[0]);
                             value.listParam.Add(ifinde.listParam[1]);
                             value.listParam.Add(valueright);
@@ -182,14 +182,14 @@ namespace CSLight
                        
                         if (vg != null)
                         {
-                            CLS_Expression_MemberFind value = new CLS_Expression_MemberFind();
+                            CLS_Expression_MemberFind value = new CLS_Expression_MemberFind(left,rightend);
                             value.listParam.Add(valueleft);
                             value.membername = vg.value_name;
                             return value;
                         }
                         else if (vf != null)
                         {
-                            CLS_Expression_MemberFunction value = new CLS_Expression_MemberFunction();
+                            CLS_Expression_MemberFunction value = new CLS_Expression_MemberFunction(left,rightend);
                             value.functionName = vf.funcname;
                             value.listParam.Add(valueleft);
                             value.listParam.AddRange(vf.listParam.ToArray());

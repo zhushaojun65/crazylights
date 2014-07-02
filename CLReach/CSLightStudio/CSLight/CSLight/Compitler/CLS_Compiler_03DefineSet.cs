@@ -7,7 +7,7 @@ namespace CSLight
     {
         public ICLS_Expression Compiler_Expression_Define(IList<Token> tlist,CLS_Content content, int pos,int posend)
         {
-            CLS_Expression_Define define = new CLS_Expression_Define();
+            CLS_Expression_Define define = new CLS_Expression_Define(pos, posend);
             if (tlist[pos].text == "bool")
             {
                 define.value_type = typeof(bool);
@@ -33,7 +33,7 @@ namespace CSLight
             bool succ = Compiler_Expression(tlist,content, expbegin, expend, out v);
             if(succ&&v!=null)
             {
-                CLS_Expression_Define define = new CLS_Expression_Define();
+                CLS_Expression_Define define = new CLS_Expression_Define(pos,posend);
                 if (tlist[pos].text == "bool")
                 {
                     define.value_type = typeof(bool);
@@ -64,7 +64,7 @@ namespace CSLight
             bool succ = Compiler_Expression(tlist,content, expbegin, expend, out v);
             if (succ && v != null)
             {
-                CLS_Expression_SetValue define = new CLS_Expression_SetValue();
+                CLS_Expression_SetValue define = new CLS_Expression_SetValue(pos,expend);
                 define.value_name = tlist[pos].text;
                 define.listParam.Add(v);
                 return define;

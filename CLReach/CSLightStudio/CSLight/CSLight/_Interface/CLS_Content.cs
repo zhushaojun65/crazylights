@@ -48,7 +48,7 @@ namespace CSLight
             }
             stacklist.Pop();
         }
-        public string Dump()
+        public string Dump(IList<Token> tokenlist)
         {
             string svalues = "";
             foreach(var v in this.values)
@@ -59,7 +59,36 @@ namespace CSLight
             {
                 foreach(var s in stacklist)
                 {
-                    svalues += "S:" + s.ToString()+"\n";
+                    if ((s.tokenBegin == 0 && s.tokenEnd == 0)||tokenlist==null)
+                    {
+                        svalues += "S:" + s.ToString() + "\n";
+                    }
+                    else
+                    {
+                        svalues += "S:";
+                        if (s.tokenEnd - s.tokenBegin >= 10)
+                        {
+                            for(int i=s.tokenBegin;i<s.tokenBegin+3;i++)
+                            {
+                                svalues += tokenlist[i].text + " ";
+                            }
+                            svalues += "...";
+                            for (int i = s.tokenEnd-2; i <= s.tokenEnd; i++)
+                            {
+                                svalues += tokenlist[i].text + " ";
+                            }
+                        }
+                        else
+                        {
+                            for (int i = s.tokenBegin; i <= s.tokenEnd; i++)
+                            {
+                                svalues += tokenlist[i].text + " ";
+                            }
+                        }
+                        svalues += "\n";
+
+                    }
+                   
                 }
             }
             return svalues;
@@ -119,6 +148,11 @@ namespace CSLight
             static Value g_one = null;
             static Value g_oneM = null;
             static Value g_void = null;
+
+            public override string ToString()
+            {
+                return "<" + type.ToString() + ">" + value;
+            }
         }
 
         public Dictionary<string, Value> values = new Dictionary<string, Value>();

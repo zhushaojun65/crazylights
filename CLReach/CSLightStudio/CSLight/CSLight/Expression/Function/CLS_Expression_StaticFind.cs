@@ -6,8 +6,10 @@ namespace CSLight
 
     public class CLS_Expression_StaticFind : ICLS_Expression
     {
-        public CLS_Expression_StaticFind()
+        public CLS_Expression_StaticFind(int tbegin,int tend)
         {
+            tokenBegin = tbegin;
+            tokenEnd = tend;
          
         }
         //Block的参数 一个就是一行，顺序执行，没有
@@ -18,7 +20,16 @@ namespace CSLight
                 return null;
             }
         }
-
+        public int tokenBegin
+        {
+            get;
+            private set;
+        }
+        public int tokenEnd
+        {
+            get;
+            private set;
+        }
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
             content.InStack(this);

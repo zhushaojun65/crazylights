@@ -203,19 +203,19 @@ namespace CLScriptTestor
             this.Invoke(a);
         }
 
-
+        IList<CSLight.Token> tokensResult = null;
         CSLight.ICLS_Expression compilerResult = null;
         private void button2_Click(object sender, EventArgs e)
         {
             listLog.Items.Clear();
 
-            IList<CSLight.Token> tokens = null;
+            tokensResult = null;
             try
             {
-                tokens = this.scriptService.ParserToken(richTextBox_Code.Text);
+                tokensResult = this.scriptService.ParserToken(richTextBox_Code.Text);
                 using (System.IO.Stream fiels = System.IO.File.OpenWrite(curCodeFile + ".bytes"))
                 {
-                    this.scriptService.tokenParser.SaveTokenList(tokens, fiels);
+                    this.scriptService.tokenParser.SaveTokenList(tokensResult, fiels);
                 }
 
             }
@@ -225,11 +225,11 @@ namespace CLScriptTestor
             }
             using (System.IO.Stream fiels = System.IO.File.OpenRead(curCodeFile + ".bytes"))
             {
-                tokens = this.scriptService.tokenParser.ReadTokenList(fiels);
+                tokensResult = this.scriptService.tokenParser.ReadTokenList(fiels);
             }
-            if (tokens != null && tokens.Count > 0)
+            if (tokensResult != null && tokensResult.Count > 0)
             {
-                compilerResult = scriptService.CompilerToken(tokens);
+                compilerResult = scriptService.CompilerToken(tokensResult);
 
 
                 //if (compilerResult == null)
@@ -294,7 +294,7 @@ namespace CLScriptTestor
                 }
                 catch (Exception err)
                 {
-                    var dump = content.Dump();
+                    var dump = content.Dump(tokensResult);
                     MessageBox.Show("dump=" + dump +"\nerr:"+ err.ToString());
                     Log_Error("执行错误" + err.ToString() + ":" + dump);
                 }

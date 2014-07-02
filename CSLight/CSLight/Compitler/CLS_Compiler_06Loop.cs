@@ -52,6 +52,7 @@ namespace CSLight
             bool succ2 = Compiler_Expression_Block(tlist,content, fs2, fecode, out subvalueblock);
             if(succ2)
             {
+                value.tokenEnd = fecode;
                 value.listParam.Add(subvalueblock);
                 return value;
             }
@@ -91,6 +92,7 @@ namespace CSLight
                         if (!succ) return null;
                         if (subvalue != null)
                         {
+
                             value.listParam.Add(subvalue);
                         }
                     }
@@ -106,6 +108,7 @@ namespace CSLight
             bool succ2 = Compiler_Expression_Block(tlist, content, fs2, fecode, out subvalueblock);
             if (succ2)
             {
+                value.tokenEnd = fecode;
                 value.listParam.Add(subvalueblock);
                 return value;
             }

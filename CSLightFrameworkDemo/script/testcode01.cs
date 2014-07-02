@@ -34,6 +34,7 @@ static class testcode01
         foreach (var p in param)
         {
             strout += p;
+            strout += p[11];
         }
         parent.AddTextToList("_click03:" + strout);
     }

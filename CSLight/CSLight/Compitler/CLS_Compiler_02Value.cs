@@ -6,7 +6,7 @@ namespace CSLight
     public partial class CLS_Expression_Compiler : ICLS_Expression_Compiler
     {
 
-        public ICLS_Expression Compiler_Expression_Value(Token value)
+        public ICLS_Expression Compiler_Expression_Value(Token value,int pos)
         {
             if (value.type == TokenType.VALUE)
             {
@@ -37,7 +37,7 @@ namespace CSLight
             }
             else if (value.type == TokenType.IDENTIFIER)
             {
-                CLS_Expression_GetValue getvalue = new CLS_Expression_GetValue();
+                CLS_Expression_GetValue getvalue = new CLS_Expression_GetValue(pos,pos);
                 getvalue.value_name = value.text;
                 return getvalue;
             }

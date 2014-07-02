@@ -9,7 +9,8 @@ namespace CSLight
 
         public ICLS_Expression Compiler_Expression_Function(IList<Token> tlist, CLS_Content content, int pos, int posend)
         {
-            CLS_Expression_Function func = new CLS_Expression_Function();
+            CLS_Expression_Function func = new CLS_Expression_Function(pos,posend);
+
             func.funcname = tlist[pos].text;
             int begin = pos + 2;
             int dep;
@@ -24,6 +25,7 @@ namespace CSLight
                     if (succ && param != null)
                     {
                         func.listParam.Add(param);
+                        func.tokenEnd = end;
                     }
                     begin = end + 2;
                     end = FindCodeAnyInFunc(tlist, ref begin, out dep);
@@ -48,7 +50,7 @@ namespace CSLight
             {
                 return null;
             }
-            CLS_Expression_Function func = new CLS_Expression_Function();
+            CLS_Expression_Function func = new CLS_Expression_Function(pos,end);
             func.funcname = "trace";
 
             do
@@ -58,6 +60,7 @@ namespace CSLight
                 if (succ && param != null)
                 {
                     func.listParam.Add(param);
+                    func.tokenEnd = end;
                 }
                 begin = end + 2;
                 end = FindCodeAny(tlist, ref begin, out dep);
@@ -81,7 +84,7 @@ namespace CSLight
 
         public ICLS_Expression Compiler_Expression_FunctionNew(IList<Token> tlist, CLS_Content content, int pos, int posend)
         {
-            CLS_Expression_FunctionNew func = new CLS_Expression_FunctionNew();
+            CLS_Expression_FunctionNew func = new CLS_Expression_FunctionNew(pos,posend);
             func.type =content.environment.GetTypeByKeyword( tlist[pos+1].text);
             int begin = pos + 3;
             int dep;
@@ -112,7 +115,7 @@ namespace CSLight
 
         public ICLS_Expression Compiler_Expression_FunctionStatic(IList<Token> tlist, CLS_Content content, int pos, int posend)
         {
-            CLS_Expression_Function func = new CLS_Expression_Function();
+            CLS_Expression_Function func = new CLS_Expression_Function(pos,posend);
             func.funcname = tlist[pos].text;
             int begin = pos + 2;
             int dep;
@@ -127,6 +130,7 @@ namespace CSLight
                     if (succ && param != null)
                     {
                         func.listParam.Add(param);
+                        func.tokenEnd = end;
                     }
                     begin = end + 2;
                     end = FindCodeAny(tlist, ref begin, out dep);
@@ -144,7 +148,7 @@ namespace CSLight
 
         public ICLS_Expression Compiler_Expression_IndexFind(IList<Token> tlist, CLS_Content content, int pos, int posend)
         {
-            CLS_Expression_IndexFind func = new CLS_Expression_IndexFind();
+            CLS_Expression_IndexFind func = new CLS_Expression_IndexFind(pos,posend);
             ICLS_Expression lefv;
             bool b = Compiler_Expression(tlist, content, pos, pos, out lefv);
             func.listParam.Add(lefv);
@@ -161,6 +165,7 @@ namespace CSLight
                     bool succ = Compiler_Expression(tlist, content, begin, end, out param);
                     if (succ && param != null)
                     {
+                        func.tokenEnd = end;
                         func.listParam.Add(param);
                     }
                     begin = end + 2;

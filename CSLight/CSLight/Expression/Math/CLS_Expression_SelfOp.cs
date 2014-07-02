@@ -15,7 +15,16 @@ namespace CSLight
                 return null;
             }
         }
-
+        public int tokenBegin
+        {
+            get;
+            private set;
+        }
+        public int tokenEnd
+        {
+            get;
+            private set;
+        }
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
             content.InStack(this);

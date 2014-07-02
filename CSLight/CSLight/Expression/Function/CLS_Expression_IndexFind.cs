@@ -6,9 +6,11 @@ namespace CSLight
 
     public class CLS_Expression_IndexFind : ICLS_Expression
     {
-        public CLS_Expression_IndexFind()
+        public CLS_Expression_IndexFind(int tbegin,int tend)
         {
             listParam = new List<ICLS_Expression>();
+            tokenBegin = tbegin;
+            tokenEnd = tend;
         }
         //Block的参数 一个就是一行，顺序执行，没有
         public List<ICLS_Expression> listParam
@@ -16,7 +18,16 @@ namespace CSLight
             get;
             private set;
         }
-
+        public int tokenBegin
+        {
+            get;
+            private set;
+        }
+        public int tokenEnd
+        {
+            get;
+            set;
+        }
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
             content.InStack(this);

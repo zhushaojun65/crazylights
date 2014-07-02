@@ -27,6 +27,15 @@ namespace CSLight
             get;
         }
         CLS_Content.Value ComputeValue(CLS_Content content);
+
+        int tokenBegin
+        {
+            get;
+        }
+        int tokenEnd
+        {
+            get;
+        }
 	}
 
 

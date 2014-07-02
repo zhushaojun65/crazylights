@@ -295,7 +295,7 @@ namespace CLScriptTestor
                 catch (Exception err)
                 {
                     var dump = content.Dump();
-                    MessageBox.Show("dump=" + dump);
+                    MessageBox.Show("dump=" + dump +"\nerr:"+ err.ToString());
                     Log_Error("执行错误" + err.ToString() + ":" + dump);
                 }
                 if (returnvalue == null)

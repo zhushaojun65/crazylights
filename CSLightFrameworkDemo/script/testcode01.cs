@@ -34,7 +34,8 @@ static class testcode01
         foreach (var p in param)
         {
             strout += p;
-            strout += p[11];
+            //故意写错的一行，测试异常报告
+            //strout += param[10];
         }
         parent.AddTextToList("_click03:" + strout);
     }

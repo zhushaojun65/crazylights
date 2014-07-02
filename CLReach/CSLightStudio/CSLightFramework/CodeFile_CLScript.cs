@@ -6,180 +6,206 @@ using System.Text;
 
 namespace CSLight.Framework
 {
-public class CodeFile_CLScript<T>:ICodeFile<T> where T:class
-{
-    ScriptMgr<T> scriptmgr;
-    public CodeFile_CLScript(ScriptMgr<T> scriptmgr, string name, string src)
+    public class CodeFile_CLScript<T> : ICodeFile<T> where T : class
     {
-        this.scriptmgr = scriptmgr;
-        this.name = name;
-        scriptmgr.scriptEnv.logger.Log("(scriptParser)Gen:" + name);
-        ParseCode(src);
-    }
-    public string name
-    {
-        get;
-        private set;
-    }
-    public class functioninfo
-    {
-        public string name;
-        public List<string> paramname = new List<string>();
-        //public string code;
-        public CSLight.ICLS_Expression exp;
-    }
-   
-    Dictionary<string, functioninfo> funcs = new Dictionary<string, functioninfo>();
-    void ParseFunc(IList<CSLight.Token> tokens, string funcname,int parambegin,int paramend,int funcbegin,int funcend)
-    {
-        functioninfo func = new functioninfo();
-        string paramname = "";
-        //检查参数
-        for (int i = parambegin ; i <= paramend; i++)
+        ScriptMgr<T> scriptmgr;
+        public CodeFile_CLScript(ScriptMgr<T> scriptmgr, string name, string src)
         {
-            if(tokens[i].text=="," ||tokens[i].text==")")
-            {
-                func.paramname.Add(tokens[i - 1].text);
-                paramname += tokens[i - 1].text+"|";
-            }
+            this.scriptmgr = scriptmgr;
+            this.name = name;
+            scriptmgr.scriptEnv.logger.Log("(scriptParser)Gen:" + name);
+            ParseCode(src);
+        }
+        public string name
+        {
+            get;
+            private set;
+        }
+        public class functioninfo
+        {
+            public string name;
+            public List<string> paramname = new List<string>();
+            //public string code;
+            public CSLight.ICLS_Expression exp;
+            public IList<Token> tokens;
         }
 
-        //编译表达式
-        List<CSLight.Token> codetokens =new List<CSLight.Token>();
-        for (int i = funcbegin; i <= funcend;i++ )
+        Dictionary<string, functioninfo> funcs = new Dictionary<string, functioninfo>();
+        void ParseFunc(IList<CSLight.Token> tokens, string funcname, int parambegin, int paramend, int funcbegin, int funcend)
         {
-            codetokens.Add(tokens[i]);
-            //Debug.Log("(script)ft:" + tokens[i].text);
-        }
-        var exp = scriptmgr.scriptEnv.CompilerToken(codetokens);
-        scriptmgr.scriptEnv.logger.Log("(scriptParser)findfunction:" + funcname + "(" + paramname + "){" + exp + "}");
-        func.name = funcname;
-        func.exp = exp;
-        funcs[funcname] = func;
-    }
-    void ParseCode(string src)
-    {
-        scriptmgr.scriptEnv.logger.Log("(scriptParser)ParseCode=" + src);
-        var parser = scriptmgr.scriptEnv.tokenParser;
-        IList<CSLight.Token> tokens =      parser.Parse(src);
-
-        for (int i = 0; i < tokens.Count;i++ )
-        {
-            if(tokens[i].text=="class")
+            functioninfo func = new functioninfo();
+            string paramname = "";
+            //检查参数
+            for (int i = parambegin; i <= paramend; i++)
             {
-                string name =tokens[i+1].text;
-                int ibegin = i + 2;
-                int iend = FindBlock(tokens, ibegin);
-                scriptmgr.scriptEnv.logger.Log("(scriptParser)findclass:" + name + "(" + ibegin + "," + iend + ")");
-                for (int j = ibegin+1; j < iend; j++)
+                if (tokens[i].text == "," || tokens[i].text == ")")
                 {
-                    if(tokens[j].type== CSLight.TokenType.TYPE)//发现类型
+                    func.paramname.Add(tokens[i - 1].text);
+                    paramname += tokens[i - 1].text + "|";
+                }
+            }
+
+            //编译表达式
+            List<CSLight.Token> codetokens = new List<CSLight.Token>();
+            for (int i = funcbegin; i <= funcend; i++)
+            {
+                codetokens.Add(tokens[i]);
+                //Debug.Log("(script)ft:" + tokens[i].text);
+            }
+            var exp = scriptmgr.scriptEnv.CompilerToken(codetokens);
+            scriptmgr.scriptEnv.logger.Log("(scriptParser)findfunction:" + funcname + "(" + paramname + "){" + exp + "}");
+            func.name = funcname;
+            func.exp = exp;
+            func.tokens = codetokens;
+            funcs[funcname] = func;
+        }
+        void ParseCode(string src)
+        {
+            scriptmgr.scriptEnv.logger.Log("(scriptParser)ParseCode=" + src);
+            var parser = scriptmgr.scriptEnv.tokenParser;
+            IList<CSLight.Token> tokens = parser.Parse(src);
+
+            for (int i = 0; i < tokens.Count; i++)
+            {
+                if (tokens[i].text == "class")
+                {
+                    string name = tokens[i + 1].text;
+                    int ibegin = i + 2;
+                    int iend = FindBlock(tokens, ibegin);
+                    scriptmgr.scriptEnv.logger.Log("(scriptParser)findclass:" + name + "(" + ibegin + "," + iend + ")");
+                    for (int j = ibegin + 1; j < iend; j++)
                     {
-                        if(tokens[j+1].type== CSLight.TokenType.IDENTIFIER) //类型后面是名称
+                        if (tokens[j].type == CSLight.TokenType.TYPE)//发现类型
                         {
-                            string funcname = tokens[j + 1].text;
-                            if(tokens[j+2].type== CSLight.TokenType.PUNCTUATION &&tokens[j+2].text=="(")//参数开始,这是函数
+                            if (tokens[j + 1].type == CSLight.TokenType.IDENTIFIER) //类型后面是名称
                             {
-                                int funcparambegin = j + 2;
-                                int funcparamend = FindBlock(tokens, funcparambegin);
+                                string funcname = tokens[j + 1].text;
+                                if (tokens[j + 2].type == CSLight.TokenType.PUNCTUATION && tokens[j + 2].text == "(")//参数开始,这是函数
+                                {
+                                    int funcparambegin = j + 2;
+                                    int funcparamend = FindBlock(tokens, funcparambegin);
 
-                                int funcbegin = funcparamend+1;
-                                int funcend = FindBlock(tokens, funcbegin);
+                                    int funcbegin = funcparamend + 1;
+                                    int funcend = FindBlock(tokens, funcbegin);
 
-                                ParseFunc(tokens,funcname, funcparambegin, funcparamend, funcbegin, funcend);
+                                    ParseFunc(tokens, funcname, funcparambegin, funcparamend, funcbegin, funcend);
 
 
-                                j = funcend;
+                                    j = funcend;
+                                }
                             }
                         }
                     }
+                    return;
                 }
-                return;
             }
-        }
-        scriptmgr.scriptEnv.logger.Log_Error("(script)not findclass");
+            scriptmgr.scriptEnv.logger.Log_Error("(script)not findclass");
 
-    }
-    int FindBlock(IList<CSLight.Token> tokens,int start)
-    {
-        if(tokens[start].type!= CSLight.TokenType.PUNCTUATION)
-        {
-            scriptmgr.scriptEnv.logger.Log_Error("(script)FindBlock 没有从符号开始");
         }
-        string left = tokens[start].text;
-        string right = "}";
-        if (left == "{") right = "}";
-        if (left == "(") right = ")";
-        if (left == "[") right = "]";
-        int depth = 0;
-        for (int i = start; i < tokens.Count;i++ )
+        int FindBlock(IList<CSLight.Token> tokens, int start)
         {
-            if(tokens[i].type== CSLight.TokenType.PUNCTUATION)
+            if (tokens[start].type != CSLight.TokenType.PUNCTUATION)
             {
-                if(tokens[i].text==left)
+                scriptmgr.scriptEnv.logger.Log_Error("(script)FindBlock 没有从符号开始");
+            }
+            string left = tokens[start].text;
+            string right = "}";
+            if (left == "{") right = "}";
+            if (left == "(") right = ")";
+            if (left == "[") right = "]";
+            int depth = 0;
+            for (int i = start; i < tokens.Count; i++)
+            {
+                if (tokens[i].type == CSLight.TokenType.PUNCTUATION)
                 {
-                    depth++;
-                }
-                else if(tokens[i].text==right)
-                {
-                    depth--;
-                    if(depth==0)
+                    if (tokens[i].text == left)
                     {
-                        return i;
+                        depth++;
+                    }
+                    else if (tokens[i].text == right)
+                    {
+                        depth--;
+                        if (depth == 0)
+                        {
+                            return i;
+                        }
                     }
                 }
             }
+            return -1;
         }
-        return -1;
-    }
-    T parent = null;
-    public void New(T parent)
-    {
-        this.parent = parent;
-        this.CallScriptFuncWithoutParam("_new");
-    }
-
-    public void CallScriptFuncWithoutParam(string scriptname)
-    {
-        if(funcs.ContainsKey(scriptname)==false)
+        T parent = null;
+        public void New(T parent)
         {
-            scriptmgr.scriptEnv.logger.Log("(script)" + this.name + "." + scriptname + " not found.");
-            return;
+            this.parent = parent;
+            this.CallScriptFuncWithoutParam("_new");
         }
-        var func = funcs[scriptname];
-        CSLight.CLS_Content content = new CSLight.CLS_Content(scriptmgr.scriptEnv);
-        content.DefineAndSet(func.paramname[0], typeof(T), parent);
-        func.exp.ComputeValue(content);
-    }
 
-    public void CallScriptFuncWithParamString(string scriptname, string param)
-    {
-        if (funcs.ContainsKey(scriptname) == false)
+        public void CallScriptFuncWithoutParam(string scriptname)
         {
-            scriptmgr.scriptEnv.logger.Log("(script)" + this.name + "." + scriptname + " not found.");
-            return;
+            if (funcs.ContainsKey(scriptname) == false)
+            {
+                scriptmgr.scriptEnv.logger.Log("(script)" + this.name + "." + scriptname + " not found.");
+                return;
+            }
+            var func = funcs[scriptname];
+            CSLight.CLS_Content content = new CSLight.CLS_Content(scriptmgr.scriptEnv);
+            try
+            {
+                content.DefineAndSet(func.paramname[0], typeof(T), parent);
+                func.exp.ComputeValue(content);
+            }
+            catch (Exception err)
+            {
+                string msg = this.name + ":" + scriptname + "\n" + err.Message + "\n" + content.Dump(func.tokens) + "\n";
+                throw new Exception(msg, err);
+            }
         }
-        var func = funcs[scriptname];
-        CSLight.CLS_Content content = new CSLight.CLS_Content(scriptmgr.scriptEnv);
-        content.DefineAndSet(func.paramname[0], typeof(T), parent);
-        content.DefineAndSet(func.paramname[1], typeof(string), param);
-        func.exp.ComputeValue(content);
-    }
 
-    public void CallScriptWithParamStrings(string scriptname, List<string> param)
-    {
-        if (funcs.ContainsKey(scriptname) == false)
+        public void CallScriptFuncWithParamString(string scriptname, string param)
         {
-            scriptmgr.scriptEnv.logger.Log("(script)" + this.name + "." + scriptname + " not found.");
-            return;
+            if (funcs.ContainsKey(scriptname) == false)
+            {
+                scriptmgr.scriptEnv.logger.Log("(script)" + this.name + "." + scriptname + " not found.");
+                return;
+            }
+            var func = funcs[scriptname];
+            CSLight.CLS_Content content = new CSLight.CLS_Content(scriptmgr.scriptEnv);
+            try
+            {
+                content.DefineAndSet(func.paramname[0], typeof(T), parent);
+                content.DefineAndSet(func.paramname[1], typeof(string), param);
+                func.exp.ComputeValue(content);
+            }
+            catch (Exception err)
+            {
+                string msg = this.name + ":" + scriptname + "\n" + err.Message + "\n" + content.Dump(func.tokens) + "\n";
+                throw new Exception(msg, err);
+            }
         }
-        var func = funcs[scriptname];
-        CSLight.CLS_Content content = new CSLight.CLS_Content(scriptmgr.scriptEnv);
-        content.DefineAndSet(func.paramname[0], typeof(T), parent);
-        content.DefineAndSet(func.paramname[1], typeof(List<string>), param);
-        func.exp.ComputeValue(content);
-    }
 
-}
+        public void CallScriptWithParamStrings(string scriptname, List<string> param)
+        {
+            if (funcs.ContainsKey(scriptname) == false)
+            {
+                scriptmgr.scriptEnv.logger.Log("(script)" + this.name + "." + scriptname + " not found.");
+                return;
+            }
+            var func = funcs[scriptname];
+            CSLight.CLS_Content content = new CSLight.CLS_Content(scriptmgr.scriptEnv);
+            try
+            {
+                content.DefineAndSet(func.paramname[0], typeof(T), parent);
+                content.DefineAndSet(func.paramname[1], typeof(List<string>), param);
+                func.exp.ComputeValue(content);
+            }
+            catch (Exception err)
+            {
+                string msg = this.name + ":" + scriptname + "\n" + err.Message + "\n" + content.Dump(func.tokens) + "\n";
+                throw new Exception(msg, err);
+            }
+        }
+
+    }
 
 }

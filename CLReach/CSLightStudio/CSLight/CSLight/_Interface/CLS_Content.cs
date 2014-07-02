@@ -61,7 +61,7 @@ namespace CSLight
                 {
                     if ((s.tokenBegin == 0 && s.tokenEnd == 0)||tokenlist==null)
                     {
-                        svalues += "S:" + s.ToString() + "\n";
+                        svalues += "在脚本:" + s.ToString() + "\n";
                     }
                     else
                     {

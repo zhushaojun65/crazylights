@@ -19,6 +19,7 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
+            content.InStack(this);
             content.DepthAdd();
             ICLS_Expression expr_init = listParam[0] as ICLS_Expression;
             if (expr_init != null) expr_init.ComputeValue(content);
@@ -40,6 +41,7 @@ namespace CSLight
                 }
             }
             content.DepthRemove();
+            content.OutStack(this);
             return null;
             //for 逻辑
             //做数学计算

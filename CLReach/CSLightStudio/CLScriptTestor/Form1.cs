@@ -10,7 +10,7 @@ namespace CLScriptTestor
 {
     public partial class Form1 : Form, CSLight.ICLS_Logger
     {
-        
+
         public Form1()
         {
             InitializeComponent();
@@ -57,7 +57,7 @@ namespace CLScriptTestor
 
         static int testCallAdd(int a, int b)
         {
-            Console.WriteLine("a=" + a+ " b=" + b);
+            Console.WriteLine("a=" + a + " b=" + b);
             return a + b;
         }
         static int testCallDec(int a, int b)
@@ -100,7 +100,7 @@ namespace CLScriptTestor
         private void button1_Click(object sender, EventArgs e)
         {
             IList<CSLight.Token> tokens = this.scriptService.ParserToken(richTextBox_Code.Text);
-            using(System.IO.Stream fiels = System.IO.File.OpenWrite(curCodeFile+".bytes"))
+            using (System.IO.Stream fiels = System.IO.File.OpenWrite(curCodeFile + ".bytes"))
             {
                 this.scriptService.tokenParser.SaveTokenList(tokens, fiels);
             }
@@ -284,9 +284,9 @@ namespace CLScriptTestor
             {
                 CSLight.ICLS_Expression exp = compilerResult;
                 CSLight.CLS_Content.Value returnvalue = new CSLight.CLS_Content.Value();
+                CSLight.CLS_Content content = this.scriptService.CreateContent();
                 try
                 {
-                    CSLight.CLS_Content content = this.scriptService.CreateContent();
 
                     returnvalue = exp.ComputeValue(content);
 
@@ -294,9 +294,11 @@ namespace CLScriptTestor
                 }
                 catch (Exception err)
                 {
-                    Log_Error("执行错误" + err.ToString());
+                    var dump = content.Dump();
+                    MessageBox.Show("dump=" + dump);
+                    Log_Error("执行错误" + err.ToString() + ":" + dump);
                 }
-                if(returnvalue==null)
+                if (returnvalue == null)
                 {
                     Log("result=<none>");
                 }
@@ -337,7 +339,7 @@ namespace CLScriptTestor
             {
                 string codelite = "return " + code;
                 var tokens = this.scriptService.ParserToken(code);
-                compilerResult = this.scriptService.CompilerToken(tokens,true);
+                compilerResult = this.scriptService.CompilerToken(tokens, true);
                 compilerResult = this.scriptService.Optimize(compilerResult);
                 if (compilerResult != null)
                 {

@@ -19,22 +19,23 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
+            content.InStack(this);
             CLS_Content.Value result = new CLS_Content.Value();
 
- 
+
             //if(mathop=="<"||mathop=="<="||mathop==">"||mathop==">="||mathop=="=="||mathop=="!=")
             {
                 result.type = typeof(bool);
-                 var left = listParam[0].ComputeValue(content);
+                var left = listParam[0].ComputeValue(content);
                 var right = listParam[1].ComputeValue(content);
-                if(left.type== typeof(bool)&&right.type==typeof(bool))
+                if (left.type == typeof(bool) && right.type == typeof(bool))
                 {
-                    if(mathop== logictoken.equal)
+                    if (mathop == logictoken.equal)
                     {
                         result.value = (bool)left.value == (bool)right.value;
                         return result;
                     }
-                    else if(mathop== logictoken.not_equal)
+                    else if (mathop == logictoken.not_equal)
                     {
                         result.value = (bool)left.value != (bool)right.value;
                         return result;
@@ -48,16 +49,16 @@ namespace CSLight
                 {
 
                     result.value = content.environment.GetType(left.type).MathLogic(content.environment, mathop, left.value, right);
-                    return result;
+
                 }
             }
+            content.OutStack(this);
 
-            return null;
-
+            return result;
         }
 
         public logictoken mathop;
-  
+
         public override string ToString()
         {
             return "Math2ValueLogic|a" + mathop + "b";

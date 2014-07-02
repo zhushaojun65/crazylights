@@ -19,6 +19,7 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
+            content.InStack(this);
             CLS_Content.Value rv = new CLS_Content.Value();
             rv.breakBlock = 10;
             if (listParam.Count > 0&&listParam[0]!=null)
@@ -33,6 +34,7 @@ namespace CSLight
             {
                 rv.type = typeof(void);
             }
+            content.OutStack(this);
             return rv;
 
             //for 逻辑

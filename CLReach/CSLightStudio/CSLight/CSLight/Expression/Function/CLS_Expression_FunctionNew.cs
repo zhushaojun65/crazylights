@@ -19,6 +19,7 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
+            content.InStack(this);
             List<CLS_Content.Value> list = new List<CLS_Content.Value>();
             foreach(ICLS_Expression p in listParam)
             {
@@ -27,7 +28,9 @@ namespace CSLight
                     list.Add(p.ComputeValue(content));
                 }
             }
-            return type.function.New(content.environment,list);
+            var value= type.function.New(content.environment,list);
+            content.OutStack(this);
+            return value;
 
         }
         public CSLight.ICLS_Type type;

@@ -19,7 +19,7 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
-
+            content.InStack(this);
             //var parent = listParam[0].ComputeValue(content);
             //var type = content.environment.GetType(parent.type);
             List<CLS_Content.Value> _params = new List<CLS_Content.Value>();
@@ -27,7 +27,9 @@ namespace CSLight
             {
                 _params.Add(listParam[i].ComputeValue(content));
             }
-            return type.function.StaticCall(content.environment, functionName, _params);
+            var value = type.function.StaticCall(content.environment, functionName, _params);
+            content.OutStack(this);
+            return value;
             //做数学计算
             //从上下文取值
             //_value = null;
@@ -39,7 +41,7 @@ namespace CSLight
 
         public override string ToString()
         {
-            return "StaticCall|"+ type.keyword + "." + functionName;
+            return "StaticCall|" + type.keyword + "." + functionName;
         }
     }
 }

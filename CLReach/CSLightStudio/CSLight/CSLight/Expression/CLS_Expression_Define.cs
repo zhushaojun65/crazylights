@@ -26,6 +26,7 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
+            content.InStack(this);
 
             if (_listParam != null && _listParam.Count > 0)
             {
@@ -50,6 +51,8 @@ namespace CSLight
                 content.Define(value_name, value_type);
             }
             //设置环境变量为
+            content.OutStack(this);
+
             return null;
         }
         public string value_name;

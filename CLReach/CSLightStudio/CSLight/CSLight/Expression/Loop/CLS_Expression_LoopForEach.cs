@@ -19,8 +19,8 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
-
-
+            content.InStack(this);
+            content.DepthAdd();
             CLS_Expression_Define define = listParam[0] as CLS_Expression_Define;
             if (define == null)
             {
@@ -59,7 +59,8 @@ namespace CSLight
             //        //if (v.breakBlock == 10) return v;
             //    }
             //}
-
+            content.DepthRemove();
+            content.OutStack(this);
             return null;
             //for 逻辑
             //做数学计算

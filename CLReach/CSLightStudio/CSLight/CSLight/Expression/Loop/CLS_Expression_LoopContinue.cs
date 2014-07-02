@@ -21,9 +21,11 @@ namespace CSLight
 
         public CLS_Content.Value ComputeValue(CLS_Content content)
         {
+            content.InStack(this);
             CLS_Content.Value rv = new CLS_Content.Value();
             rv.breakBlock = 1;
             //跳出逻辑
+            content.OutStack(this);
             return rv;
         }
 

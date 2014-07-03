@@ -71,6 +71,8 @@ namespace CSLight.Framework
                 {
                     string name = tokens[i + 1].text;
                     int ibegin = i + 2;
+                    while (tokens[ibegin].text != "{") 
+                        ibegin++;
                     int iend = FindBlock(tokens, ibegin);
                     scriptmgr.scriptEnv.logger.Log("(scriptParser)findclass:" + name + "(" + ibegin + "," + iend + ")");
                     for (int j = ibegin + 1; j < iend; j++)

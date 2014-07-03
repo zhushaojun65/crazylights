@@ -66,14 +66,14 @@ namespace CSLight
                     else
                     {
                         svalues += "在脚本 :";
-                        if (s.tokenEnd - s.tokenBegin >= 10)
+                        if (s.tokenEnd - s.tokenBegin >= 20)
                         {
-                            for(int i=s.tokenBegin;i<s.tokenBegin+3;i++)
+                            for(int i=s.tokenBegin;i<s.tokenBegin+8;i++)
                             {
                                 svalues += tokenlist[i].text + " ";
                             }
                             svalues += "...";
-                            for (int i = s.tokenEnd-2; i <= s.tokenEnd; i++)
+                            for (int i = s.tokenEnd-7; i <= s.tokenEnd; i++)
                             {
                                 svalues += tokenlist[i].text + " ";
                             }

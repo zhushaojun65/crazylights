@@ -60,7 +60,7 @@ namespace CSLight
             //从上下文取值
             //_value = null;
             content.OutStack(this);
-            return null;
+            return value;
         }
 
 

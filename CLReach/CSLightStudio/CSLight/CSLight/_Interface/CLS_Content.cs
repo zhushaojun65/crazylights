@@ -44,7 +44,7 @@ namespace CSLight
             if (!useDebug) return;
             if (stacklist.Peek() != expr)
             {
-                throw new Exception("OutStack error");
+                throw new Exception("OutStack error:" + expr.ToString() + " err:"+stacklist.Peek().ToString());
             }
             stacklist.Pop();
         }
@@ -151,6 +151,10 @@ namespace CSLight
 
             public override string ToString()
             {
+                if(type==null)
+                {
+                    return "<null>" + value;
+                }
                 return "<" + type.ToString() + ">" + value;
             }
         }
